@@ -47,4 +47,11 @@ public class CompanyRepository {
                 .map(Company::getEmployees)
                 .orElseThrow(NoCompanyFoundException::new);
     }
+
+    public List<Company> findByPage(Integer page, Integer pageSize) {
+        return companies.stream()
+                .skip((long)(page - 1) * pageSize)
+                .limit(pageSize)
+                .collect(Collectors.toList());
+    }
 }
