@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,20 +34,21 @@ public class EmployeeController {
         return employeeRepository.findByPage(page, pageSize);
     }
 
-//    @PostMapping
-//    public Employee createEmployee(@RequestBody Employee employee) {
-//        return employeeRepository.create(employee);
-//    }
-//
-//    @PutMapping("/{id}")
-//    public Employee editEmployee(@PathVariable Integer id, @RequestBody Employee updatedEmployee) {
-//        Employee employee = employeeRepository.findById(id);
-//        if (employee.getAge() != null) {
-//            employee.setAge(updatedEmployee.getAge());
-//        }
-//        if (employee.getSalary() != null) {
-//            employee.setSalary(employee.getSalary());
-//        }
-//        return employeeRepository.save(id, updatedEmployee);
-//    }
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Employee createEmployee(@RequestBody Employee employee) {
+        return employeeRepository.create(employee);
+    }
+
+    @PutMapping("/{id}")
+    public Employee editEmployee(@PathVariable Integer id, @RequestBody Employee updatedEmployee) {
+        Employee employee = employeeRepository.findById(id);
+        if (updatedEmployee.getAge() != null) {
+            employee.setAge(updatedEmployee.getAge());
+        }
+        if (updatedEmployee.getSalary() != null) {
+            employee.setSalary(updatedEmployee.getSalary());
+        }
+        return employeeRepository.save(id, employee);
+    }
 }

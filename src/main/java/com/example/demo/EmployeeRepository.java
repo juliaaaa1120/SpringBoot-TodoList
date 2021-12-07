@@ -45,18 +45,18 @@ public class EmployeeRepository {
                 .collect(Collectors.toList());
     }
 
-//    public Employee create(Employee employee) {
-//        Integer nextId = employees.stream()
-//                .mapToInt(Employee::getId)
-//                .max()
-//                .orElse(0) + 1;
-//        return new Employee(nextId, employee.getName(), employee.getAge(), employee.getGender(), employee.getSalary());
-//    }
-//
-//    public Employee save(Integer id, Employee updatedEmployee) {
-//        Employee employee = findById(id);
-//        employees.remove(employee);
-//        employees.add(updatedEmployee);
-//        return updatedEmployee;
-//    }
+    public Employee create(Employee employee) {
+        Integer nextId = employees.stream()
+                .mapToInt(Employee::getId)
+                .max()
+                .orElse(0) + 1;
+        return new Employee(nextId, employee.getName(), employee.getAge(), employee.getGender(), employee.getSalary());
+    }
+
+    public Employee save(Integer id, Employee updatedEmployee) {
+        Employee employee = findById(id);
+        employees.remove(employee);
+        employees.add(updatedEmployee);
+        return updatedEmployee;
+    }
 }

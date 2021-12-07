@@ -36,12 +36,12 @@ public class Employee {
         return this.salary;
     }
 
-//    public void setAge(Integer age) {
-//        this.age = age;
-//    }
-//
-//    public void setSalary(Integer salary) {
-//        this.salary = salary;
-//    }
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public void setSalary(Integer salary) {
+        this.salary = salary;
+    }
 }
 
