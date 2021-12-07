@@ -8,6 +8,8 @@ import java.util.List;
 @RestController
 @RequestMapping("employees")
 public class EmployeeController {
+    public static final String SUCCESSFUL_MESSAGE = "Employee ${id} is successfully deleted.";
+    public static final String UNSUCCESSFUL_MESSAGE = "Employee ${id} is not found.";
     private final EmployeeRepository employeeRepository;
 
     public EmployeeController(EmployeeRepository employeeRepository) {
@@ -50,5 +52,12 @@ public class EmployeeController {
             employee.setSalary(updatedEmployee.getSalary());
         }
         return employeeRepository.save(id, employee);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public String deleteEmployee(@PathVariable Integer id) {
+        boolean isSuccessfullyDeleted = employeeRepository.remove(id);
+        return isSuccessfullyDeleted ? SUCCESSFUL_MESSAGE : UNSUCCESSFUL_MESSAGE;
     }
 }
