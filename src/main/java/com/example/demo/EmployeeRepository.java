@@ -38,13 +38,13 @@ public class EmployeeRepository {
                 .collect(Collectors.toList());
     }
 
-//    public List<Employee> findByPage(Integer page, Integer pageSize) {
-//        return employees.stream()
-//                .skip((long) page * pageSize)
-//                .limit(pageSize)
-//                .collect(Collectors.toList());
-//    }
-//
+    public List<Employee> findByPage(Integer page, Integer pageSize) {
+        return employees.stream()
+                .skip((long) page * pageSize)
+                .limit(pageSize)
+                .collect(Collectors.toList());
+    }
+
 //    public Employee create(Employee employee) {
 //        Integer nextId = employees.stream()
 //                .mapToInt(Employee::getId)
