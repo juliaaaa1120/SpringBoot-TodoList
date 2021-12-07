@@ -32,4 +32,11 @@ public class CompanyRepository {
     public List<Company> findAll() {
         return companies;
     }
+
+    public Company findById(Integer id) {
+        return companies.stream()
+                .filter(company -> company.getId().equals(id))
+                .findFirst()
+                .orElseThrow(NoCompanyFoundException::new);
+    }
 }
