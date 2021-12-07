@@ -62,4 +62,11 @@ public class CompanyRepository {
                 .orElse(0) + 1;
         return new Company(nextId, company.getCompanyName(), company.getEmployees());
     }
+
+    public Company save(Integer id, Company updatedCompany) {
+        Company company = findById(id);
+        companies.remove(company);
+        companies.add(updatedCompany);
+        return updatedCompany;
+    }
 }

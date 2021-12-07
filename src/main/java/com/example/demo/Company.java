@@ -4,8 +4,8 @@ import java.util.List;
 
 public class Company {
     private final Integer id;
-    private final String companyName;
-    private final List<Employee> employees;
+    private String companyName;
+    private List<Employee> employees;
 
 
     public Company(int id, String companyName, List<Employee> employees) {
@@ -24,6 +24,14 @@ public class Company {
 
     public List<Employee> getEmployees() {
         return this.employees;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public void setEmployees(List<Employee> employees) {
+        this.employees = employees;
     }
 }
 
