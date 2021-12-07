@@ -25,13 +25,13 @@ public class EmployeeRepository {
         return employees;
     }
 
-//    public Employee findById(Integer id) {
-//        return employees.stream()
-//                .filter(employee -> employee.getId().equals(id))
-//                .findFirst()
-//                .orElseThrow(NoEmployeeFoundException::new);
-//    }
-//
+    public Employee findById(Integer id) {
+        return employees.stream()
+                .filter(employee -> employee.getId().equals(id))
+                .findFirst()
+                .orElseThrow(NoEmployeeFoundException::new);
+    }
+
 //    public List<Employee> findByGender(String gender) {
 //        return employees.stream()
 //                .filter(employee -> employee.getGender().equals(gender))

@@ -1,7 +1,7 @@
-//package com.example.demo;
-//
-//public class NoEmployeeFoundException extends RuntimeException {
-//    public NoEmployeeFoundException() {
-//
-//    }
-//}
+package com.example.demo;
+
+public class NoEmployeeFoundException extends RuntimeException {
+    public NoEmployeeFoundException() {
+
+    }
+}
