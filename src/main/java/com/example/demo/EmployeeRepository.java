@@ -60,8 +60,8 @@ public class EmployeeRepository {
         return updatedEmployee;
     }
 
-    public boolean remove(Integer id) {
+    public void remove(Integer id) {
         Employee employee = findById(id);
-        return employees.remove(employee);
+        employees.remove(employee);
     }
 }

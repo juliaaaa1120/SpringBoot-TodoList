@@ -56,8 +56,7 @@ public class EmployeeController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public String deleteEmployee(@PathVariable Integer id) {
-        boolean isSuccessfullyDeleted = employeeRepository.remove(id);
-        return (isSuccessfullyDeleted ? SUCCESSFUL_MESSAGE : UNSUCCESSFUL_MESSAGE);
+    public void deleteEmployee(@PathVariable Integer id) {
+        employeeRepository.remove(id);
     }
 }

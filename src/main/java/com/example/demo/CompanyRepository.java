@@ -69,4 +69,9 @@ public class CompanyRepository {
         companies.add(updatedCompany);
         return updatedCompany;
     }
+
+    public void remove(Integer id) {
+        Company company = findById(id);
+        companies.remove(company);
+    }
 }
