@@ -22,12 +22,12 @@ public class EmployeeController {
     public Employee getEmployeeById(@PathVariable Integer id) {
         return employeeRepository.findById(id);
     }
-//
-//    @GetMapping(params = {"gender"})
-//    public List<Employee> getEmployeesByGender(@RequestParam String gender) {
-//        return employeeRepository.findByGender(gender);
-//    }
-//
+
+    @GetMapping(params = {"gender"})
+    public List<Employee> getEmployeesByGender(@RequestParam String gender) {
+        return employeeRepository.findByGender(gender);
+    }
+
 //    @GetMapping(params = {"page", "pageSize"})
 //    public List<Employee> getEmployeesByPage(@RequestParam Integer page, @RequestParam Integer pageSize) {
 //        return employeeRepository.findByPage(page, pageSize);
