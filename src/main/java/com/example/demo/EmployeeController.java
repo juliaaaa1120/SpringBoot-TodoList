@@ -58,6 +58,6 @@ public class EmployeeController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public String deleteEmployee(@PathVariable Integer id) {
         boolean isSuccessfullyDeleted = employeeRepository.remove(id);
-        return isSuccessfullyDeleted ? SUCCESSFUL_MESSAGE : UNSUCCESSFUL_MESSAGE;
+        return (isSuccessfullyDeleted ? SUCCESSFUL_MESSAGE : UNSUCCESSFUL_MESSAGE);
     }
 }
