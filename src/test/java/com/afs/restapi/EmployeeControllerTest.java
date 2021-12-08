@@ -106,7 +106,6 @@ public class EmployeeControllerTest {
         employeeRepository.create(employee2);
         Employee employee3 = new Employee(3, "Gloria", 18, "Female", 100000);
         employeeRepository.create(employee3);
-
         //when
         mockMvc.perform(MockMvcRequestBuilders.get("/employees")
                 .param("page", "2")
@@ -129,7 +128,6 @@ public class EmployeeControllerTest {
                 "        \"gender\": \"Male\",\n" +
                 "        \"salary\": 100000\n" +
                 "}";
-
         //when
         mockMvc.perform(MockMvcRequestBuilders.post("/employees")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -149,11 +147,12 @@ public class EmployeeControllerTest {
         employeeRepository.create(employee1);
         Employee employee2 = new Employee(2, "Jason", 18, "Male", 100000);
         employeeRepository.create(employee2);
+        Employee employee3 = new Employee(3, "Gloria", 18, "Female", 100000);
+        employeeRepository.create(employee3);
         String updatedEmployee = "{\n" +
                 "        \"age\": 30,\n" +
                 "        \"salary\": 500000\n" +
                 "}";
-
         //when
         mockMvc.perform(MockMvcRequestBuilders.put("/employees/{id}", employee2.getId())
                     .contentType(MediaType.APPLICATION_JSON)
@@ -164,6 +163,20 @@ public class EmployeeControllerTest {
                 .andExpect(jsonPath("$.age").value(30))
                 .andExpect(jsonPath("$.gender").value("Male"))
                 .andExpect(jsonPath("$.salary").value(500000));
+    }
+
+    @Test
+    void should_return_null_when_perform_delete_given_employee_id() throws Exception {
+        //given
+        Employee employee1 = new Employee(1, "Julia", 18, "Female", 100000);
+        employeeRepository.create(employee1);
+        Employee employee2 = new Employee(2, "Jason", 18, "Male", 100000);
+        employeeRepository.create(employee2);
+        Employee employee3 = new Employee(3, "Gloria", 18, "Female", 100000);
+        employeeRepository.create(employee3);
+        //when
+        mockMvc.perform(MockMvcRequestBuilders.delete("/employees/{id}", employee2.getId()))
+                .andExpect(status().isNoContent());
     }
 }
 
