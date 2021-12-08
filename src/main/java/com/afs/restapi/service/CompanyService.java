@@ -44,7 +44,8 @@ public class CompanyService {
     }
 
     public List<Employee> findAllEmployeesByCompanyId(Integer id) {
-        return companyRepository.findAllEmployeesByCompanyId(id);
+        Company company = updateEmployees(id);
+        return company.getEmployees();
     }
 
     public List<Company> findByPage(Integer page, Integer pageSize) {
