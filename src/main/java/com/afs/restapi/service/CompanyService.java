@@ -47,7 +47,7 @@ public class CompanyService {
         return companyRepository.create(company);
     }
 
-//    public Employee remove(Integer id) {
-//        return employeeRepository.remove(id);
-//    }
+    public Company remove(Integer id) {
+        return companyRepository.remove(id);
+    }
 }

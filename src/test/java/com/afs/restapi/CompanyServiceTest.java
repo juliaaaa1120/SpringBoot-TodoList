@@ -161,19 +161,28 @@ public class CompanyServiceTest {
         assertEquals(company, actual);
     }
 
-//    @Test
-//    void should_return_employee_when_delete_employee_given_employee_id() {
-//        //given
-//        Employee employee1 = new Employee(1, "Julia", 22, "Female", 100000);
-//        Employee employee2 = new Employee(2, "Jason", 22, "Male", 100000);
-//
-//        given(mockCompanyRepository.remove(employee1.getId()))
-//                .willReturn(employee1);
-//
-//        //when
-//        Employee actual = companyService.remove(employee1.getId());
-//
-//        //then
-//        assertEquals(employee1, actual);
-//    }
+    @Test
+    void should_return_company_when_delete_company_given_company_id() {
+        //given
+        Company company1 = new Company(1, "OOCL", Arrays.asList(
+                new Employee(1, "Julia", 18, "Female", 100000),
+                new Employee(2, "Jason", 18, "Male", 100000),
+                new Employee(3, "Klaus", 18, "Male", 100000)
+        ));
+        Company company2 = new Company(2, "DHL", Arrays.asList(
+                new Employee(4, "Joanne", 18, "Female", 100000),
+                new Employee(5, "John", 18, "Male", 100000),
+                new Employee(6, "Johnson", 18, "Male", 100000),
+                new Employee(7, "Nicole", 18, "Female", 100000)
+        ));
+
+        given(mockCompanyRepository.remove(company2.getId()))
+                .willReturn(company2);
+
+        //when
+        Company actual = companyService.remove(company2.getId());
+
+        //then
+        assertEquals(company2, actual);
+    }
 }
