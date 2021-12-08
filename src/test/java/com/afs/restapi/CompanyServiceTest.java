@@ -135,25 +135,32 @@ public class CompanyServiceTest {
         assertEquals(company, actual);
     }
 
-//    @Test
-//    void should_return_updated_employee_when_edit_employee_given_updated_employee() {
-//        //given
-//        Employee employee = new Employee(1, "Julia", 22, "Female", 100000);
-//        Employee updatedEmployee = new Employee(1, "Julia", 25, "Female", 500000);
-//        given(mockCompanyRepository.findById(any()))
-//                .willReturn(employee);
-//        employee.setAge(updatedEmployee.getAge());
-//        employee.setSalary(updatedEmployee.getSalary());
-//        given(mockCompanyRepository.save(any(), any(Employee.class)))
-//                .willReturn(employee);
-//
-//        //when
-//        Employee actual = companyService.edit(employee.getId(), updatedEmployee);
-//
-//        //then
-//        assertEquals(employee, actual);
-//    }
-//
+    @Test
+    void should_return_updated_company_when_edit_company_given_updated_company() {
+        //given
+        Company company = new Company(1, "OOCL", Arrays.asList(
+                new Employee(1, "Julia", 18, "Female", 100000),
+                new Employee(2, "Jason", 18, "Male", 100000),
+                new Employee(3, "Klaus", 18, "Male", 100000)
+        ));
+        Company updatedCompany = new Company(1, "Disney", Arrays.asList(
+                new Employee(1, "Gloria", 18, "Female", 100000),
+                new Employee(2, "Jason", 18, "Male", 100000)
+        ));
+        given(mockCompanyRepository.findById(any()))
+                .willReturn(company);
+        company.setCompanyName(updatedCompany.getCompanyName());
+        company.setEmployees(updatedCompany.getEmployees());
+        given(mockCompanyRepository.save(any(), any(Company.class)))
+                .willReturn(company);
+
+        //when
+        Company actual = companyService.edit(company.getId(), updatedCompany);
+
+        //then
+        assertEquals(company, actual);
+    }
+
 //    @Test
 //    void should_return_employee_when_delete_employee_given_employee_id() {
 //        //given

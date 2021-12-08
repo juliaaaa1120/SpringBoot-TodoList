@@ -20,17 +20,17 @@ public class CompanyService {
         return companyRepository.findAll();
     }
 
-//    public Employee edit(Integer id, Employee updatedEmployee) {
-//        Employee employee = employeeRepository.findById(id);
-//        if (updatedEmployee.getAge() != null) {
-//            employee.setAge(updatedEmployee.getAge());
-//        }
-//        if (updatedEmployee.getSalary() != null) {
-//            employee.setSalary(updatedEmployee.getSalary());
-//        }
-//        return employeeRepository.save(id, employee);
-//    }
-//
+    public Company edit(Integer id, Company updatedCompany) {
+        Company company = companyRepository.findById(id);
+        if (updatedCompany.getCompanyName() != null) {
+            company.setCompanyName(updatedCompany.getCompanyName());
+        }
+        if (updatedCompany.getEmployees() != null) {
+            company.setEmployees(updatedCompany.getEmployees());
+        }
+        return companyRepository.save(id, company);
+    }
+
     public Company findById(Integer id) {
         return companyRepository.findById(id);
     }
