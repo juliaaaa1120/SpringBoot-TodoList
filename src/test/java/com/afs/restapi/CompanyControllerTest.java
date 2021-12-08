@@ -166,30 +166,15 @@ public class CompanyControllerTest {
     void should_return_company_when_perform_post_given_company() throws Exception {
         //given
         String employee = "{\n" +
-                "        \"id\": 1,\n" +
-                "        \"companyName\": \"OOCL\",\n" +
-                "        \"employees\": [\n" +
-                "            {\n" +
-                "                \"id\": 1,\n" +
-                "                \"name\": \"Julia\",\n" +
-                "                \"age\": 18,\n" +
-                "                \"gender\": \"Female\",\n" +
-                "                \"salary\": 100000\n" +
-                "            }\n" +
-                "        ]\n" +
+                "        \"companyName\": \"OOCL\"\n" +
                 "    }";
         //when
         mockMvc.perform(MockMvcRequestBuilders.post("/companies")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(employee))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.companyName").value("OOCL"))
-                .andExpect(jsonPath("$.employees[0].id").value(1))
-                .andExpect(jsonPath("$.employees[0].name").value("Julia"))
-                .andExpect(jsonPath("$.employees[0].age").value(18))
-                .andExpect(jsonPath("$.employees[0].gender").value("Female"))
-                .andExpect(jsonPath("$.employees[0].salary").value(100000));
+                .andExpect(jsonPath("$.id").isNumber())
+                .andExpect(jsonPath("$.companyName").value("OOCL"));
     }
 
     @Test
