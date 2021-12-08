@@ -40,7 +40,7 @@ public class CompanyService {
     }
 
     public Company findById(Integer id) {
-        return companyRepository.findById(id);
+        return updateEmployees(id);
     }
 
     public List<Employee> findAllEmployeesByCompanyId(Integer id) {
@@ -60,7 +60,7 @@ public class CompanyService {
     }
 
     public Company updateEmployees(Integer companyId) {
-        Company company = findById(companyId);
+        Company company = companyRepository.findById(companyId);
         List<Employee> employees = employeeService.getEmployeesByCompanyId(companyId);
         companyRepository.updateEmployees(companyId, employees);
         return company;

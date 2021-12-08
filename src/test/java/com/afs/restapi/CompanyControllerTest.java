@@ -77,16 +77,24 @@ public class CompanyControllerTest {
         companyRepository.create(company1);
         Company company2 = new Company(2, "SF Express");
         companyRepository.create(company2);
+        Employee employee1 = new Employee(1, "Julia", 18, "Female",1, 100000);
+        employeeRepository.create(employee1);
+        Employee employee2 = new Employee(2, "Jason", 18, "Male",1, 100000);
+        employeeRepository.create(employee2);
+        Employee employee3 = new Employee(3, "Klaus", 18, "Male", 2,100000);
+        employeeRepository.create(employee3);
+
         //when
         mockMvc.perform(MockMvcRequestBuilders.get("/companies/{id}", company2.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(2))
                 .andExpect(jsonPath("$.companyName").value("SF Express"))
                 .andExpect(jsonPath("$.employees", hasSize(1)))
-                .andExpect(jsonPath("$.employees[0].id").value(8))
-                .andExpect(jsonPath("$.employees[0].name").value("Gloria"))
+                .andExpect(jsonPath("$.employees[0].id").value(3))
+                .andExpect(jsonPath("$.employees[0].name").value("Klaus"))
                 .andExpect(jsonPath("$.employees[0].age").value(18))
-                .andExpect(jsonPath("$.employees[0].gender").value("Female"))
+                .andExpect(jsonPath("$.employees[0].gender").value("Male"))
+                .andExpect(jsonPath("$.employees[0].companyId").value(2))
                 .andExpect(jsonPath("$.employees[0].salary").value(100000));
         //then
     }
