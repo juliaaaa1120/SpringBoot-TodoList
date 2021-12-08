@@ -50,7 +50,7 @@ public class EmployeeControllerTest {
 //        mockMvc.perform(MockMvcRequestBuilders.get("/employees/" + employee.getId()))
 //        mockMvc.perform(MockMvcRequestBuilders.get("/employees?gender=" + "Male"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id").isNumber())
+                .andExpect(jsonPath("$[0].id").value(1))
                 .andExpect(jsonPath("$[0].name").value("Julia"))
                 .andExpect(jsonPath("$[0].age").value(18))
                 .andExpect(jsonPath("$[0].gender").value("Female"))
@@ -59,7 +59,7 @@ public class EmployeeControllerTest {
     }
 
     @Test
-    void should_get_employee_by_id_when_perform_get_given_employees_id() throws Exception {
+    void should_get_employee_by_id_when_perform_get_given_employee_id() throws Exception {
         //given
         Employee employee1 = new Employee(1, "Julia", 18, "Female", 100000);
         employeeRepository.create(employee1);
@@ -77,7 +77,7 @@ public class EmployeeControllerTest {
     }
 
     @Test
-    void should_get_employees_by_gender_when_perform_get_given_employees_gender() throws Exception {
+    void should_get_employees_by_gender_when_perform_get_given_employee_gender() throws Exception {
         //given
         Employee employee1 = new Employee(1, "Julia", 18, "Female", 100000);
         employeeRepository.create(employee1);
@@ -98,7 +98,7 @@ public class EmployeeControllerTest {
     }
 
     @Test
-    void should_get_employees_by_page_when_perform_get_given_employees_page_and_page_size() throws Exception {
+    void should_get_employees_by_page_when_perform_get_given_page_and_page_size() throws Exception {
         //given
         Employee employee1 = new Employee(1, "Julia", 18, "Female", 100000);
         employeeRepository.create(employee1);
@@ -123,6 +123,30 @@ public class EmployeeControllerTest {
     @Test
     void should_return_employee_when_perform_post_given_employee() throws Exception {
         //given
+        Employee employee1 = new Employee(1, "Julia", 18, "Female", 100000);
+        employeeRepository.create(employee1);
+        Employee employee2 = new Employee(2, "Jason", 18, "Male", 100000);
+        employeeRepository.create(employee2);
+        String updatedEmployee = "{\n" +
+                "        \"age\": 30,\n" +
+                "        \"salary\": 500000\n" +
+                "}";
+
+        //when
+        mockMvc.perform(MockMvcRequestBuilders.put("/employees/{id}", employee2.getId())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(updatedEmployee))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(2))
+                .andExpect(jsonPath("$.name").value("Jason"))
+                .andExpect(jsonPath("$.age").value(30))
+                .andExpect(jsonPath("$.gender").value("Male"))
+                .andExpect(jsonPath("$.salary").value(500000));
+    }
+
+    @Test
+    void should_return_updated_employee_when_perform_put_given_employee_id() throws Exception {
+        //given
         String employee = "{\n" +
                 "        \"name\": \"Koby\",\n" +
                 "        \"age\": 18,\n" +
@@ -132,8 +156,8 @@ public class EmployeeControllerTest {
 
         //when
         mockMvc.perform(MockMvcRequestBuilders.post("/employees")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(employee))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(employee))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name").value("Koby"))
                 .andExpect(jsonPath("$.age").value(18))
