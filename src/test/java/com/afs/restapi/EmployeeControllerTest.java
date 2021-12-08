@@ -123,6 +123,28 @@ public class EmployeeControllerTest {
     @Test
     void should_return_employee_when_perform_post_given_employee() throws Exception {
         //given
+        String employee = "{\n" +
+                "        \"name\": \"Koby\",\n" +
+                "        \"age\": 18,\n" +
+                "        \"gender\": \"Male\",\n" +
+                "        \"salary\": 100000\n" +
+                "}";
+
+        //when
+        mockMvc.perform(MockMvcRequestBuilders.post("/employees")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(employee))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").isNumber())
+                .andExpect(jsonPath("$.name").value("Koby"))
+                .andExpect(jsonPath("$.age").value(18))
+                .andExpect(jsonPath("$.gender").value("Male"))
+                .andExpect(jsonPath("$.salary").value(100000));
+    }
+
+    @Test
+    void should_return_updated_employee_when_perform_put_given_employee_id() throws Exception {
+        //given
         Employee employee1 = new Employee(1, "Julia", 18, "Female", 100000);
         employeeRepository.create(employee1);
         Employee employee2 = new Employee(2, "Jason", 18, "Male", 100000);
@@ -142,27 +164,6 @@ public class EmployeeControllerTest {
                 .andExpect(jsonPath("$.age").value(30))
                 .andExpect(jsonPath("$.gender").value("Male"))
                 .andExpect(jsonPath("$.salary").value(500000));
-    }
-
-    @Test
-    void should_return_updated_employee_when_perform_put_given_employee_id() throws Exception {
-        //given
-        String employee = "{\n" +
-                "        \"name\": \"Koby\",\n" +
-                "        \"age\": 18,\n" +
-                "        \"gender\": \"Male\",\n" +
-                "        \"salary\": 100000\n" +
-                "}";
-
-        //when
-        mockMvc.perform(MockMvcRequestBuilders.post("/employees")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(employee))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.name").value("Koby"))
-                .andExpect(jsonPath("$.age").value(18))
-                .andExpect(jsonPath("$.gender").value("Male"))
-                .andExpect(jsonPath("$.salary").value(100000));
     }
 }
 
