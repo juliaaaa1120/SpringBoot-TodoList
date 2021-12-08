@@ -59,6 +59,24 @@ public class EmployeeControllerTest {
     }
 
     @Test
+    void should_get_employee_by_id_when_perform_get_given_employees_id() throws Exception {
+        //given
+        Employee employee1 = new Employee(1, "Julia", 18, "Female", 100000);
+        employeeRepository.create(employee1);
+        Employee employee2 = new Employee(2, "Jason", 18, "Male", 100000);
+        employeeRepository.create(employee2);
+        //when
+        mockMvc.perform(MockMvcRequestBuilders.get("/employees/{id}", employee2.getId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(2))
+                .andExpect(jsonPath("$.name").value("Jason"))
+                .andExpect(jsonPath("$.age").value(18))
+                .andExpect(jsonPath("$.gender").value("Male"))
+                .andExpect(jsonPath("$.salary").value(100000));
+        //then
+    }
+
+    @Test
     void should_return_employee_when_perform_post_given_employee() throws Exception {
         //given
         String employee = "{\n" +
