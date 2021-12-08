@@ -75,9 +75,10 @@ public class CompanyRepository {
         return updatedCompany;
     }
 
-    public void remove(Integer id) {
+    public Company remove(Integer id) {
         Company company = findById(id);
         companies.remove(company);
+        return company;
     }
 
     public void clearAll() {

@@ -234,19 +234,32 @@ public class CompanyControllerTest {
                 .andExpect(jsonPath("$.employees[0].salary").value(100000));
     }
 
-//    @Test
-//    void should_return_null_when_perform_delete_given_employee_id() throws Exception {
-//        //given
-//        Employee employee1 = new Employee(1, "Julia", 18, "Female", 100000);
-//        companyRepository.create(employee1);
-//        Employee employee2 = new Employee(2, "Jason", 18, "Male", 100000);
-//        companyRepository.create(employee2);
-//        Employee employee3 = new Employee(3, "Gloria", 18, "Female", 100000);
-//        companyRepository.create(employee3);
-//        //when
-//        mockMvc.perform(MockMvcRequestBuilders.delete("/employees/{id}", employee2.getId()))
-//                .andExpect(status().isNoContent());
-//        assertEquals(2, companyRepository.findAll().size());
-//    }
+    @Test
+    void should_return_company_when_perform_delete_given_company_id() throws Exception {
+        //given
+        Company company = new Company(1, "OOCL", Arrays.asList(
+                new Employee(1, "Julia", 18, "Female", 100000),
+                new Employee(2, "Jason", 18, "Male", 100000),
+                new Employee(3, "Klaus", 18, "Male", 100000)
+        ));
+        companyRepository.create(company);
+        //when
+        mockMvc.perform(MockMvcRequestBuilders.delete("/companies/{id}", company.getId()))
+                .andExpect(status().isNoContent())
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.companyName").value("OOCL"))
+                .andExpect(jsonPath("$.employees", hasSize(3)))
+                .andExpect(jsonPath("$.employees[0].id").value(1))
+                .andExpect(jsonPath("$.employees[0].name").value("Julia"))
+                .andExpect(jsonPath("$.employees[0].age").value(18))
+                .andExpect(jsonPath("$.employees[0].gender").value("Female"))
+                .andExpect(jsonPath("$.employees[0].salary").value(100000))
+                .andExpect(jsonPath("$.employees[1].id").value(2))
+                .andExpect(jsonPath("$.employees[1].name").value("Jason"))
+                .andExpect(jsonPath("$.employees[1].age").value(18))
+                .andExpect(jsonPath("$.employees[1].gender").value("Male"))
+                .andExpect(jsonPath("$.employees[1].salary").value(100000));
+        assertEquals(0, companyRepository.findAll().size());
+    }
 }
 
