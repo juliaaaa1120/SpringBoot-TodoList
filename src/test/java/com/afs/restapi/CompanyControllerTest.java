@@ -50,10 +50,20 @@ public class CompanyControllerTest {
 //        mockMvc.perform(MockMvcRequestBuilders.get("/employees/" + employee.getId()))
 //        mockMvc.perform(MockMvcRequestBuilders.get("/employees?gender=" + "Male"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].id").value(1))
                 .andExpect(jsonPath("$[0].companyName").value("OOCL"))
-                .andExpect(jsonPath("$[0].employees", hasSize(3)));
+                .andExpect(jsonPath("$[0].employees", hasSize(3)))
+                .andExpect(jsonPath("$[0].employees[0].id").value(1))
+                .andExpect(jsonPath("$[0].employees[0].name").value("Julia"))
+                .andExpect(jsonPath("$[0].employees[0].age").value(18))
+                .andExpect(jsonPath("$[0].employees[0].gender").value("Female"))
+                .andExpect(jsonPath("$[0].employees[0].salary").value(100000))
+                .andExpect(jsonPath("$[0].employees[1].id").value(2))
+                .andExpect(jsonPath("$[0].employees[1].name").value("Jason"))
+                .andExpect(jsonPath("$[0].employees[1].age").value(18))
+                .andExpect(jsonPath("$[0].employees[1].gender").value("Male"))
+                .andExpect(jsonPath("$[0].employees[1].salary").value(100000));
         //then
     }
 
@@ -75,36 +85,40 @@ public class CompanyControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(2))
                 .andExpect(jsonPath("$.companyName").value("SF Express"))
-                .andExpect(jsonPath("$.employees", hasSize(1)));
+                .andExpect(jsonPath("$.employees", hasSize(1)))
+                .andExpect(jsonPath("$.employees[0].id").value(8))
+                .andExpect(jsonPath("$.employees[0].name").value("Gloria"))
+                .andExpect(jsonPath("$.employees[0].age").value(18))
+                .andExpect(jsonPath("$.employees[0].gender").value("Female"))
+                .andExpect(jsonPath("$.employees[0].salary").value(100000));
         //then
     }
 
-//    @Test
-//    void should_get_employees_by_gender_when_perform_get_given_employee_gender() throws Exception {
-//        //given
-//        Employee employee1 = new Employee(1, "Julia", 18, "Female", 100000);
-//        companyRepository.create(employee1);
-//        Employee employee2 = new Employee(2, "Jason", 18, "Male", 100000);
-//        companyRepository.create(employee2);
-//        Employee employee3 = new Employee(3, "Gloria", 18, "Female", 100000);
-//        companyRepository.create(employee3);
-//        //when
-//        mockMvc.perform(MockMvcRequestBuilders.get("/employees")
-//                    .param("gender", "Female"))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$", hasSize(2)))
-//                .andExpect(jsonPath("$[0].id").value(1))
-//                .andExpect(jsonPath("$[0].name").value("Julia"))
-//                .andExpect(jsonPath("$[0].age").value(18))
-//                .andExpect(jsonPath("$[0].gender").value("Female"))
-//                .andExpect(jsonPath("$[0].salary").value(100000))
-//                .andExpect(jsonPath("$[1].id").value(3))
-//                .andExpect(jsonPath("$[1].name").value("Gloria"))
-//                .andExpect(jsonPath("$[1].age").value(18))
-//                .andExpect(jsonPath("$[1].gender").value("Female"))
-//                .andExpect(jsonPath("$[1].salary").value(100000));
-//        //then
-//    }
+    @Test
+    void should_all_employees_in_company_when_perform_get_given_company_id_employees() throws Exception {
+        //given
+        Company company = new Company(1, "OOCL", Arrays.asList(
+                new Employee(1, "Julia", 18, "Female", 100000),
+                new Employee(2, "Jason", 18, "Male", 100000),
+                new Employee(3, "Klaus", 18, "Male", 100000)
+        ));
+        companyRepository.create(company);
+        //when
+        mockMvc.perform(MockMvcRequestBuilders.get("/companies/{id}/employees", company.getId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(3)))
+                .andExpect(jsonPath("$[0].id").value(1))
+                .andExpect(jsonPath("$[0].name").value("Julia"))
+                .andExpect(jsonPath("$[0].age").value(18))
+                .andExpect(jsonPath("$[0].gender").value("Female"))
+                .andExpect(jsonPath("$[0].salary").value(100000))
+                .andExpect(jsonPath("$[1].id").value(2))
+                .andExpect(jsonPath("$[1].name").value("Jason"))
+                .andExpect(jsonPath("$[1].age").value(18))
+                .andExpect(jsonPath("$[1].gender").value("Male"))
+                .andExpect(jsonPath("$[1].salary").value(100000));
+        //then
+    }
 //
 //    @Test
 //    void should_get_employees_by_page_when_perform_get_given_page_and_page_size() throws Exception {
