@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.afs.restapi;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -8,8 +8,6 @@ import java.util.List;
 @RestController
 @RequestMapping("employees")
 public class EmployeeController {
-    public static final String SUCCESSFUL_MESSAGE = "Employee ${id} is successfully deleted.";
-    public static final String UNSUCCESSFUL_MESSAGE = "Employee ${id} is not found.";
     private final EmployeeRepository employeeRepository;
 
     public EmployeeController(EmployeeRepository employeeRepository) {

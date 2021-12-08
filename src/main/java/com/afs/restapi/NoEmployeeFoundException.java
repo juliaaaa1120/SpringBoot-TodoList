@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.afs.restapi;
 
 public class NoEmployeeFoundException extends RuntimeException {
     public NoEmployeeFoundException() {

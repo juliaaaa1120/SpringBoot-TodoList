@@ -1,14 +1,14 @@
-package com.example.demo;
+package com.afs.restapi;
 
 public class Employee {
-    private final Integer id;
+    private Integer id;
     private final String name;
     private Integer age;
     private final String gender;
     private Integer salary;
 
 
-    public Employee(int id, String name, int age, String gender, int salary) {
+    public Employee(Integer id, String name, Integer age, String gender, Integer salary) {
         this.id = id;
         this.name = name;
         this.age = age;
@@ -34,6 +34,10 @@ public class Employee {
 
     public Integer getSalary() {
         return this.salary;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public void setAge(Integer age) {

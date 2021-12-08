@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.afs.restapi;
 
 import org.springframework.stereotype.Repository;
 
@@ -11,13 +11,13 @@ public class EmployeeRepository {
     private List<Employee> employees = new ArrayList<>();
 
     public EmployeeRepository() {
-        employees.add(new Employee(1, "Julia", 18, "F", 100000));
-        employees.add(new Employee(2, "Jason", 18, "M", 100000));
-        employees.add(new Employee(3, "Klaus", 18, "M", 100000));
-        employees.add(new Employee(4, "Joanne", 18, "F", 100000));
-        employees.add(new Employee(5, "John", 18, "M", 100000));
-        employees.add(new Employee(6, "Johnson", 18, "M", 100000));
-        employees.add(new Employee(7, "Nicole", 18, "F", 100000));
+        employees.add(new Employee(1, "Julia", 18, "Female", 100000));
+        employees.add(new Employee(2, "Jason", 18, "Male", 100000));
+        employees.add(new Employee(3, "Klaus", 18, "Male", 100000));
+        employees.add(new Employee(4, "Joanne", 18, "Female", 100000));
+        employees.add(new Employee(5, "John", 18, "Male", 100000));
+        employees.add(new Employee(6, "Johnson", 18, "Male", 100000));
+        employees.add(new Employee(7, "Nicole", 18, "Female", 100000));
     }
 
 
@@ -50,7 +50,9 @@ public class EmployeeRepository {
                 .mapToInt(Employee::getId)
                 .max()
                 .orElse(0) + 1;
-        return new Employee(nextId, employee.getName(), employee.getAge(), employee.getGender(), employee.getSalary());
+        employee.setId(nextId);
+        employees.add(employee);
+        return employee;
     }
 
     public Employee save(Integer id, Employee updatedEmployee) {
@@ -63,5 +65,9 @@ public class EmployeeRepository {
     public void remove(Integer id) {
         Employee employee = findById(id);
         employees.remove(employee);
+    }
+
+    public void clearAll() {
+        employees.clear();
     }
 }

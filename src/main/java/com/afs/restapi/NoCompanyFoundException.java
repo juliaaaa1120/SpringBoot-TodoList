@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.afs.restapi;
 
 public class NoCompanyFoundException extends RuntimeException {
     public NoCompanyFoundException() {
