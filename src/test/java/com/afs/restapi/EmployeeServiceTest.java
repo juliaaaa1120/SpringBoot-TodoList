@@ -72,25 +72,26 @@ public class EmployeeServiceTest {
         assertEquals(femaleEmployees, actual);
     }
 
-//    @Test
-//    void should_return_employees_by_page_when_find_by_page_given_employee_gender() {
-//        //given
-//        List<Employee> femaleEmployees = new ArrayList<>();
-//        Employee employee1 = new Employee(1, "Julia", 22, "Female", 100000);
-//        Employee employee2 = new Employee(2, "Jason", 22, "Male", 100000);
-//        Employee employee3 = new Employee(3, "Joanne", 22, "Female", 100000);
-//        femaleEmployees.add(employee1);
-//        femaleEmployees.add(employee3);
-//
-//        given(mockEmployeeRepository.findByGender("Female"))
-//                .willReturn(femaleEmployees);
-//
-//        //when
-//        List<Employee> actual = employeeService.findByGender("Female");
-//
-//        //then
-//        assertEquals(femaleEmployees, actual);
-//    }
+    @Test
+    void should_return_employees_by_page_when_find_by_page_given_page_and_page_size() {
+        //given
+        List<Employee> displayedEmployees = new ArrayList<>();
+        Employee employee1 = new Employee(1, "Julia", 22, "Female", 100000);
+        Employee employee2 = new Employee(2, "Jason", 22, "Male", 100000);
+        Employee employee3 = new Employee(3, "Joanne", 22, "Female", 100000);
+        Employee employee4 = new Employee(3, "John", 22, "Male", 100000);
+        displayedEmployees.add(employee3);
+        displayedEmployees.add(employee4);
+
+        given(mockEmployeeRepository.findByPage(2,2))
+                .willReturn(displayedEmployees);
+
+        //when
+        List<Employee> actual = employeeService.findByPage(2,2);
+
+        //then
+        assertEquals(displayedEmployees, actual);
+    }
 
     @Test
     void should_return_updated_employee_when_edit_employee_given_updated_employee() {
