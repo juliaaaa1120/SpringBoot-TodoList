@@ -5,7 +5,6 @@ import com.afs.restapi.entity.Employee;
 import com.afs.restapi.repository.CompanyRepository;
 import com.afs.restapi.repository.EmployeeRepository;
 import com.afs.restapi.service.CompanyService;
-import com.afs.restapi.service.EmployeeService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -46,23 +45,25 @@ public class CompanyServiceTest {
         assertEquals(companies, actual);
     }
 
-//    @Test
-//    void should_return_employee_by_id_when_find_by_id_given_employee_id() {
-//        //given
-//        Employee employee1 = new Employee(1, "Julia", 22, "Female", 100000);
-//        Employee employee2 = new Employee(2, "Jason", 22, "Male", 100000);
-//        Employee employee3 = new Employee(3, "Joanne", 22, "Female", 100000);
-//
-//        given(mockEmployeeRepository.findById(employee3.getId()))
-//                .willReturn(employee3);
-//
-//        //when
-//        Employee actual = employeeService.findById(employee3.getId());
-//
-//        //then
-//        assertEquals(employee3, actual);
-//    }
-//
+    @Test
+    void should_return_company_by_id_when_find_by_id_given_company_id() {
+        //given
+      Company company = new Company(1, "OOCL", Arrays.asList(
+                new Employee(1, "Julia", 18, "Female", 100000),
+                new Employee(2, "Jason", 18, "Male", 100000),
+                new Employee(3, "Klaus", 18, "Male", 100000)
+        ));
+
+        given(mockCompanyRepository.findById(company.getId()))
+                .willReturn(company);
+
+        //when
+        Company actual = companyService.findById(company.getId());
+
+        //then
+        assertEquals(company, actual);
+    }
+
 //    @Test
 //    void should_return_employees_by_gender_when_find_by_gender_given_employee_gender() {
 //        //given
@@ -77,7 +78,7 @@ public class CompanyServiceTest {
 //                .willReturn(femaleEmployees);
 //
 //        //when
-//        List<Employee> actual = employeeService.findByGender("Female");
+//        List<Employee> actual = companyService.findByGender("Female");
 //
 //        //then
 //        assertEquals(femaleEmployees, actual);
@@ -98,7 +99,7 @@ public class CompanyServiceTest {
 //                .willReturn(displayedEmployees);
 //
 //        //when
-//        List<Employee> actual = employeeService.findByPage(2,2);
+//        List<Employee> actual = companyService.findByPage(2,2);
 //
 //        //then
 //        assertEquals(displayedEmployees, actual);
@@ -113,7 +114,7 @@ public class CompanyServiceTest {
 //                .willReturn(employee);
 //
 //        //when
-//        Employee actual = employeeService.create(employee);
+//        Employee actual = companyService.create(employee);
 //
 //        //then
 //        assertEquals(employee, actual);
@@ -132,7 +133,7 @@ public class CompanyServiceTest {
 //                .willReturn(employee);
 //
 //        //when
-//        Employee actual = employeeService.edit(employee.getId(), updatedEmployee);
+//        Employee actual = companyService.edit(employee.getId(), updatedEmployee);
 //
 //        //then
 //        assertEquals(employee, actual);
@@ -148,7 +149,7 @@ public class CompanyServiceTest {
 //                .willReturn(employee1);
 //
 //        //when
-//        Employee actual = employeeService.remove(employee1.getId());
+//        Employee actual = companyService.remove(employee1.getId());
 //
 //        //then
 //        assertEquals(employee1, actual);

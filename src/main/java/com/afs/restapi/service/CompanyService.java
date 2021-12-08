@@ -31,9 +31,9 @@ public class CompanyService {
 //        return employeeRepository.save(id, employee);
 //    }
 //
-//    public Employee findById(Integer id) {
-//        return employeeRepository.findById(id);
-//    }
+    public Company findById(Integer id) {
+        return companyRepository.findById(id);
+    }
 //
 //    public List<Employee> findByGender(String gender) {
 //        return employeeRepository.findByGender(gender);
