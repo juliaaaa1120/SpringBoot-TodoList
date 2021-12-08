@@ -23,7 +23,7 @@ public class CompanyService {
 
     public List<Company> findAll() {
         List<Company> companies = companyRepository.findAll().stream()
-                .map(company -> updateEmployees(company.getId()))
+                .map(company -> findById(company.getId()))
                 .collect(Collectors.toList());
         return companies;
     }
@@ -40,12 +40,13 @@ public class CompanyService {
     }
 
     public Company findById(Integer id) {
-        return updateEmployees(id);
+        updateEmployees(id);
+        return companyRepository.findById(id);
     }
 
     public List<Employee> findAllEmployeesByCompanyId(Integer id) {
-        Company company = updateEmployees(id);
-        return company.getEmployees();
+        updateEmployees(id);
+        return companyRepository.findAllEmployeesByCompanyId(id);
     }
 
     public List<Company> findByPage(Integer page, Integer pageSize) {
@@ -61,10 +62,9 @@ public class CompanyService {
         return companyRepository.remove(id);
     }
 
-    public Company updateEmployees(Integer companyId) {
+    public void updateEmployees(Integer companyId) {
         Company company = companyRepository.findById(companyId);
         List<Employee> employees = employeeService.getEmployeesByCompanyId(companyId);
         companyRepository.updateEmployees(companyId, employees);
-        return company;
     }
 }
