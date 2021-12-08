@@ -60,7 +60,9 @@ public class CompanyRepository {
                 .mapToInt(Company::getId)
                 .max()
                 .orElse(0) + 1;
-        return new Company(nextId, company.getCompanyName(), company.getEmployees());
+        company.setId(nextId);
+        companies.add(company);
+        return company;
     }
 
     public Company save(Integer id, Company updatedCompany) {
@@ -73,5 +75,9 @@ public class CompanyRepository {
     public void remove(Integer id) {
         Company company = findById(id);
         companies.remove(company);
+    }
+
+    public void clearAll() {
+        companies.clear();
     }
 }

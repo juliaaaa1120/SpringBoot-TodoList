@@ -3,7 +3,7 @@ package com.afs.restapi;
 import java.util.List;
 
 public class Company {
-    private final Integer id;
+    private Integer id;
     private String companyName;
     private List<Employee> employees;
 
@@ -24,6 +24,10 @@ public class Company {
 
     public List<Employee> getEmployees() {
         return this.employees;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public void setCompanyName(String companyName) {
