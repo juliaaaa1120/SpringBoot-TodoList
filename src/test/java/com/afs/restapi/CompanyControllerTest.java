@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -167,28 +168,37 @@ public class CompanyControllerTest {
 
         //then
     }
-//
-//    @Test
-//    void should_return_employee_when_perform_post_given_employee() throws Exception {
-//        //given
-//        String employee = "{\n" +
-//                "        \"name\": \"Koby\",\n" +
-//                "        \"age\": 18,\n" +
-//                "        \"gender\": \"Male\",\n" +
-//                "        \"salary\": 100000\n" +
-//                "}";
-//        //when
-//        mockMvc.perform(MockMvcRequestBuilders.post("/employees")
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(employee))
-//                .andExpect(status().isCreated())
-//                .andExpect(jsonPath("$.id").isNumber())
-//                .andExpect(jsonPath("$.name").value("Koby"))
-//                .andExpect(jsonPath("$.age").value(18))
-//                .andExpect(jsonPath("$.gender").value("Male"))
-//                .andExpect(jsonPath("$.salary").value(100000));
-//    }
-//
+
+    @Test
+    void should_return_company_when_perform_post_given_company() throws Exception {
+        //given
+        String employee = "{\n" +
+                "        \"id\": 1,\n" +
+                "        \"companyName\": \"OOCL\",\n" +
+                "        \"employees\": [\n" +
+                "            {\n" +
+                "                \"id\": 1,\n" +
+                "                \"name\": \"Julia\",\n" +
+                "                \"age\": 18,\n" +
+                "                \"gender\": \"Female\",\n" +
+                "                \"salary\": 100000\n" +
+                "            }\n" +
+                "        ]\n" +
+                "    }";
+        //when
+        mockMvc.perform(MockMvcRequestBuilders.post("/companies")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(employee))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.companyName").value("OOCL"))
+                .andExpect(jsonPath("$.employees[0].id").value(1))
+                .andExpect(jsonPath("$.employees[0].name").value("Julia"))
+                .andExpect(jsonPath("$.employees[0].age").value(18))
+                .andExpect(jsonPath("$.employees[0].gender").value("Female"))
+                .andExpect(jsonPath("$.employees[0].salary").value(100000));
+    }
+
 //    @Test
 //    void should_return_updated_employee_when_perform_put_given_employee_id() throws Exception {
 //        //given
