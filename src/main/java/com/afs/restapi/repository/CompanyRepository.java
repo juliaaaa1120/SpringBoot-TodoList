@@ -15,20 +15,9 @@ public class CompanyRepository {
     private List<Company> companies = new ArrayList<>();
 
     public CompanyRepository() {
-        companies.add(new Company(1, "OOCL", Arrays.asList(
-                new Employee(1, "Julia", 18, "Female", 100000),
-                new Employee(2, "Jason", 18, "Male", 100000),
-                new Employee(3, "Klaus", 18, "Male", 100000)
-        )));
-        companies.add(new Company(2, "DHL", Arrays.asList(
-                new Employee(4, "Joanne", 18, "Female", 100000),
-                new Employee(5, "John", 18, "Male", 100000),
-                new Employee(6, "Johnson", 18, "Male", 100000),
-                new Employee(7, "Nicole", 18, "Female", 100000)
-        )));
-        companies.add(new Company(3, "SF Express", Arrays.asList(
-                new Employee(8, "Gloria", 18, "Female", 100000)
-        )));
+        companies.add(new Company(1, "OOCL"));
+        companies.add(new Company(2, "DHL"));
+        companies.add(new Company(3, "SF Express"));
     }
 
 

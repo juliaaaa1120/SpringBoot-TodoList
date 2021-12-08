@@ -27,7 +27,7 @@ public class EmployeeServiceTest {
     void should_return_all_employees_when_find_all_given_employees() {
         //given
         List<Employee> employees = new ArrayList<>();
-        employees.add(new Employee(1, "Julia", 22, "Female", 100000));
+        employees.add(new Employee(1, "Julia", 22, "Female",1, 100000));
         given(mockEmployeeRepository.findAll())
                 .willReturn(employees);
 
@@ -41,9 +41,9 @@ public class EmployeeServiceTest {
     @Test
     void should_return_employee_by_id_when_find_by_id_given_employee_id() {
         //given
-        Employee employee1 = new Employee(1, "Julia", 22, "Female", 100000);
-        Employee employee2 = new Employee(2, "Jason", 22, "Male", 100000);
-        Employee employee3 = new Employee(3, "Joanne", 22, "Female", 100000);
+        Employee employee1 = new Employee(1, "Julia", 22, "Female", 1,100000);
+        Employee employee2 = new Employee(2, "Jason", 22, "Male", 1,100000);
+        Employee employee3 = new Employee(3, "Joanne", 22, "Female", 1,100000);
 
         given(mockEmployeeRepository.findById(employee3.getId()))
                 .willReturn(employee3);
@@ -59,9 +59,9 @@ public class EmployeeServiceTest {
     void should_return_employees_by_gender_when_find_by_gender_given_employee_gender() {
         //given
         List<Employee> femaleEmployees = new ArrayList<>();
-        Employee employee1 = new Employee(1, "Julia", 22, "Female", 100000);
-        Employee employee2 = new Employee(2, "Jason", 22, "Male", 100000);
-        Employee employee3 = new Employee(3, "Joanne", 22, "Female", 100000);
+        Employee employee1 = new Employee(1, "Julia", 22, "Female", 1,100000);
+        Employee employee2 = new Employee(2, "Jason", 22, "Male", 1,100000);
+        Employee employee3 = new Employee(3, "Joanne", 22, "Female", 1,100000);
         femaleEmployees.add(employee1);
         femaleEmployees.add(employee3);
 
@@ -79,10 +79,10 @@ public class EmployeeServiceTest {
     void should_return_employees_by_page_when_find_by_page_given_page_and_page_size() {
         //given
         List<Employee> displayedEmployees = new ArrayList<>();
-        Employee employee1 = new Employee(1, "Julia", 22, "Female", 100000);
-        Employee employee2 = new Employee(2, "Jason", 22, "Male", 100000);
-        Employee employee3 = new Employee(3, "Joanne", 22, "Female", 100000);
-        Employee employee4 = new Employee(3, "John", 22, "Male", 100000);
+        Employee employee1 = new Employee(1, "Julia", 22, "Female", 1,100000);
+        Employee employee2 = new Employee(2, "Jason", 22, "Male", 1, 100000);
+        Employee employee3 = new Employee(3, "Joanne", 22, "Female", 1, 100000);
+        Employee employee4 = new Employee(3, "John", 22, "Male", 1,100000);
         displayedEmployees.add(employee3);
         displayedEmployees.add(employee4);
 
@@ -99,7 +99,7 @@ public class EmployeeServiceTest {
     @Test
     void should_return_employee_when_create_employee_given_employee() {
         //given
-        Employee employee = new Employee(1, "Julia", 22, "Female", 100000);
+        Employee employee = new Employee(1, "Julia", 22, "Female",1, 100000);
 
         given(mockEmployeeRepository.create(employee))
                 .willReturn(employee);
@@ -114,8 +114,8 @@ public class EmployeeServiceTest {
     @Test
     void should_return_updated_employee_when_edit_employee_given_updated_employee() {
         //given
-        Employee employee = new Employee(1, "Julia", 22, "Female", 100000);
-        Employee updatedEmployee = new Employee(1, "Julia", 25, "Female", 500000);
+        Employee employee = new Employee(1, "Julia", 22, "Female", 1,100000);
+        Employee updatedEmployee = new Employee(1, "Julia", 25, "Female", 1,500000);
         given(mockEmployeeRepository.findById(any()))
                 .willReturn(employee);
         employee.setAge(updatedEmployee.getAge());
@@ -133,8 +133,8 @@ public class EmployeeServiceTest {
     @Test
     void should_return_employee_when_delete_employee_given_employee_id() {
         //given
-        Employee employee1 = new Employee(1, "Julia", 22, "Female", 100000);
-        Employee employee2 = new Employee(2, "Jason", 22, "Male", 100000);
+        Employee employee1 = new Employee(1, "Julia", 22, "Female", 1,100000);
+        Employee employee2 = new Employee(2, "Jason", 22, "Male", 1,100000);
 
         given(mockEmployeeRepository.remove(employee1.getId()))
                 .willReturn(employee1);

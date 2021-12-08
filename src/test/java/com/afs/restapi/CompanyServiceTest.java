@@ -30,11 +30,7 @@ public class CompanyServiceTest {
     void should_return_all_companies_when_find_all_given_companies() {
         //given
         List<Company> companies = new ArrayList<>();
-        companies.add(new Company(1, "OOCL", Arrays.asList(
-                new Employee(1, "Julia", 18, "Female", 100000),
-                new Employee(2, "Jason", 18, "Male", 100000),
-                new Employee(3, "Klaus", 18, "Male", 100000)
-        )));
+        companies.add(new Company(1, "OOCL"));
         given(mockCompanyRepository.findAll())
                 .willReturn(companies);
 
@@ -48,11 +44,7 @@ public class CompanyServiceTest {
     @Test
     void should_return_company_by_id_when_find_by_id_given_company_id() {
         //given
-        Company company = new Company(1, "OOCL", Arrays.asList(
-                new Employee(1, "Julia", 18, "Female", 100000),
-                new Employee(2, "Jason", 18, "Male", 100000),
-                new Employee(3, "Klaus", 18, "Male", 100000)
-        ));
+        Company company = new Company(1, "OOCL");
 
         given(mockCompanyRepository.findById(company.getId()))
                 .willReturn(company);
@@ -67,10 +59,10 @@ public class CompanyServiceTest {
     @Test
     void should_return_all_employees_in_company_when_find_all_employees_by_company_id_given_company_id_employees() {
         //given
-        List<Employee> employees = Arrays.asList(new Employee(1, "Julia", 18, "Female", 100000),
-                new Employee(2, "Jason", 18, "Male", 100000),
-                new Employee(3, "Klaus", 18, "Male", 100000));
-        Company company = new Company(1, "OOCL", employees);
+        List<Employee> employees = Arrays.asList(new Employee(1, "Julia", 18, "Female",1, 100000),
+                new Employee(2, "Jason", 18, "Male",1, 100000),
+                new Employee(3, "Klaus", 18, "Male",1, 100000));
+        Company company = new Company(1, "OOCL");
 
         given(mockCompanyRepository.findAllEmployeesByCompanyId(company.getId()))
                 .willReturn(employees);
@@ -86,23 +78,10 @@ public class CompanyServiceTest {
     void should_return_companies_by_page_when_find_by_page_given_page_and_page_size() {
         //given
         List<Company> displayedCompanies = new ArrayList<>();
-        Company company1 = new Company(1, "OOCL", Arrays.asList(
-                new Employee(1, "Julia", 18, "Female", 100000),
-                new Employee(2, "Jason", 18, "Male", 100000),
-                new Employee(3, "Klaus", 18, "Male", 100000)
-        ));
-        Company company2 = new Company(2, "DHL", Arrays.asList(
-                new Employee(4, "Joanne", 18, "Female", 100000),
-                new Employee(5, "John", 18, "Male", 100000),
-                new Employee(6, "Johnson", 18, "Male", 100000),
-                new Employee(7, "Nicole", 18, "Female", 100000)
-        ));
-        Company company3 = new Company(3, "SF Express", Arrays.asList(
-                new Employee(8, "Gloria", 18, "Female", 100000)
-        ));
-        Company company4 = new Company(4, "Disney", Arrays.asList(
-                new Employee(9, "Koby", 18, "Male", 100000)
-        ));
+        Company company1 = new Company(1, "OOCL");
+        Company company2 = new Company(2, "DHL");
+        Company company3 = new Company(3, "SF Express");
+        Company company4 = new Company(4, "Disney");
         displayedCompanies.add(company3);
         displayedCompanies.add(company4);
 
@@ -119,11 +98,7 @@ public class CompanyServiceTest {
     @Test
     void should_return_company_when_create_company_given_company() {
         //given
-        Company company = new Company(1, "OOCL", Arrays.asList(
-                new Employee(1, "Julia", 18, "Female", 100000),
-                new Employee(2, "Jason", 18, "Male", 100000),
-                new Employee(3, "Klaus", 18, "Male", 100000)
-        ));
+        Company company = new Company(1, "OOCL");
 
         given(mockCompanyRepository.create(company))
                 .willReturn(company);
@@ -138,15 +113,8 @@ public class CompanyServiceTest {
     @Test
     void should_return_updated_company_when_edit_company_given_updated_company() {
         //given
-        Company company = new Company(1, "OOCL", Arrays.asList(
-                new Employee(1, "Julia", 18, "Female", 100000),
-                new Employee(2, "Jason", 18, "Male", 100000),
-                new Employee(3, "Klaus", 18, "Male", 100000)
-        ));
-        Company updatedCompany = new Company(1, "Disney", Arrays.asList(
-                new Employee(1, "Gloria", 18, "Female", 100000),
-                new Employee(2, "Jason", 18, "Male", 100000)
-        ));
+        Company company = new Company(1, "OOCL");
+        Company updatedCompany = new Company(1, "Disney");
         given(mockCompanyRepository.findById(any()))
                 .willReturn(company);
         company.setCompanyName(updatedCompany.getCompanyName());
@@ -164,17 +132,8 @@ public class CompanyServiceTest {
     @Test
     void should_return_company_when_delete_company_given_company_id() {
         //given
-        Company company1 = new Company(1, "OOCL", Arrays.asList(
-                new Employee(1, "Julia", 18, "Female", 100000),
-                new Employee(2, "Jason", 18, "Male", 100000),
-                new Employee(3, "Klaus", 18, "Male", 100000)
-        ));
-        Company company2 = new Company(2, "DHL", Arrays.asList(
-                new Employee(4, "Joanne", 18, "Female", 100000),
-                new Employee(5, "John", 18, "Male", 100000),
-                new Employee(6, "Johnson", 18, "Male", 100000),
-                new Employee(7, "Nicole", 18, "Female", 100000)
-        ));
+        Company company1 = new Company(1, "OOCL");
+        Company company2 = new Company(2, "DHL");
 
         given(mockCompanyRepository.remove(company2.getId()))
                 .willReturn(company2);

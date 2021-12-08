@@ -39,12 +39,8 @@ public class CompanyControllerTest {
     @Test
     void should_get_all_companies_when_perform_get_given_companies() throws Exception {
         //given
-        Company company = new Company(1, "OOCL", Arrays.asList(
-                new Employee(1, "Julia", 18, "Female", 100000),
-                new Employee(2, "Jason", 18, "Male", 100000),
-                new Employee(3, "Klaus", 18, "Male", 100000)
-        ));
-        companyRepository.create(company);
+        Company company1 = new Company(1, "OOCL");
+        companyRepository.create(company1);
         //when
         mockMvc.perform(MockMvcRequestBuilders.get("/companies"))
 //        mockMvc.perform(MockMvcRequestBuilders.get("/employees/{id}", employee.getId()))
@@ -71,15 +67,9 @@ public class CompanyControllerTest {
     @Test
     void should_get_company_by_id_when_perform_get_given_company_id() throws Exception {
         //given
-        Company company1 = new Company(1, "OOCL", Arrays.asList(
-                new Employee(1, "Julia", 18, "Female", 100000),
-                new Employee(2, "Jason", 18, "Male", 100000),
-                new Employee(3, "Klaus", 18, "Male", 100000)
-        ));
+        Company company1 = new Company(1, "OOCL");
         companyRepository.create(company1);
-        Company company2 = new Company(2, "SF Express", Arrays.asList(
-                new Employee(8, "Gloria", 18, "Female", 100000)
-        ));
+        Company company2 = new Company(2, "SF Express");
         companyRepository.create(company2);
         //when
         mockMvc.perform(MockMvcRequestBuilders.get("/companies/{id}", company2.getId()))
@@ -98,11 +88,7 @@ public class CompanyControllerTest {
     @Test
     void should_get_all_employees_in_company_when_perform_get_given_company_id_employees() throws Exception {
         //given
-        Company company = new Company(1, "OOCL", Arrays.asList(
-                new Employee(1, "Julia", 18, "Female", 100000),
-                new Employee(2, "Jason", 18, "Male", 100000),
-                new Employee(3, "Klaus", 18, "Male", 100000)
-        ));
+        Company company = new Company(1, "OOCL");
         companyRepository.create(company);
         //when
         mockMvc.perform(MockMvcRequestBuilders.get("/companies/{id}/employees", company.getId()))
@@ -124,26 +110,13 @@ public class CompanyControllerTest {
     @Test
     void should_get_companies_by_page_when_perform_get_given_page_and_page_size() throws Exception {
         //given
-        Company company1 = new Company(1, "OOCL", Arrays.asList(
-                new Employee(1, "Julia", 18, "Female", 100000),
-                new Employee(2, "Jason", 18, "Male", 100000),
-                new Employee(3, "Klaus", 18, "Male", 100000)
-        ));
+        Company company1 = new Company(1, "OOCL");
         companyRepository.create(company1);
-        Company company2 = new Company(2, "DHL", Arrays.asList(
-                new Employee(4, "Joanne", 18, "Female", 100000),
-                new Employee(5, "John", 18, "Male", 100000),
-                new Employee(6, "Johnson", 18, "Male", 100000),
-                new Employee(7, "Nicole", 18, "Female", 100000)
-        ));
+        Company company2 = new Company(2, "DHL");
         companyRepository.create(company2);
-        Company company3 = new Company(3, "SF Express", Arrays.asList(
-                new Employee(8, "Gloria", 18, "Female", 100000)
-        ));
+        Company company3 = new Company(3, "SF Express");
         companyRepository.create(company3);
-        Company company4 = new Company(4, "Disney", Arrays.asList(
-                new Employee(9, "Koby", 18, "Male", 100000)
-        ));
+        Company company4 = new Company(4, "Disney");
         companyRepository.create(company4);
         //when
         mockMvc.perform(MockMvcRequestBuilders.get("/companies")
@@ -202,11 +175,7 @@ public class CompanyControllerTest {
     @Test
     void should_return_updated_employee_when_perform_put_given_employee_id() throws Exception {
         //given
-        Company company = new Company(1, "OOCL", Arrays.asList(
-                new Employee(1, "Julia", 18, "Female", 100000),
-                new Employee(2, "Jason", 18, "Male", 100000),
-                new Employee(3, "Klaus", 18, "Male", 100000)
-        ));
+        Company company = new Company(1, "OOCL");
         companyRepository.create(company);
         String updatedCompany = "{\n" +
                 "    \"companyName\": \"Disney\",\n" +
@@ -237,14 +206,10 @@ public class CompanyControllerTest {
     @Test
     void should_return_company_when_perform_delete_given_company_id() throws Exception {
         //given
-        Company company = new Company(1, "OOCL", Arrays.asList(
-                new Employee(1, "Julia", 18, "Female", 100000),
-                new Employee(2, "Jason", 18, "Male", 100000),
-                new Employee(3, "Klaus", 18, "Male", 100000)
-        ));
+        Company company = new Company(1, "OOCL");
         companyRepository.create(company);
         //when
-        mockMvc.perform(MockMvcRequestBuilders.delete("/companies/{id}", company.getId()))
+        mockMvc.perform(MockMvcRequestBuilders.delete("/employees/{id}", company.getId()))
                 .andExpect(status().isNoContent())
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.companyName").value("OOCL"))
