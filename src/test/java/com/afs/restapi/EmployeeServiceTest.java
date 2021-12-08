@@ -94,6 +94,21 @@ public class EmployeeServiceTest {
     }
 
     @Test
+    void should_return_employee_when_create_employee_given_employee() {
+        //given
+        Employee employee = new Employee(1, "Julia", 22, "Female", 100000);
+
+        given(mockEmployeeRepository.create(employee))
+                .willReturn(employee);
+
+        //when
+        Employee actual = employeeService.create(employee);
+
+        //then
+        assertEquals(employee, actual);
+    }
+
+    @Test
     void should_return_updated_employee_when_edit_employee_given_updated_employee() {
         //given
         Employee employee = new Employee(1, "Julia", 22, "Female", 100000);

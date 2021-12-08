@@ -35,4 +35,8 @@ public class EmployeeService {
     public List<Employee> findByPage(Integer page, Integer pageSize) {
         return employeeRepository.findByPage(page, pageSize);
     }
+
+    public Employee create(Employee employee) {
+        return employeeRepository.create(employee);
+    }
 }
