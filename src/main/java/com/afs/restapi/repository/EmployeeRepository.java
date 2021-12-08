@@ -16,10 +16,11 @@ public class EmployeeRepository {
         employees.add(new Employee(1, "Julia", 18, "Female",1, 100000));
         employees.add(new Employee(2, "Jason", 18, "Male",1, 100000));
         employees.add(new Employee(3, "Klaus", 18, "Male", 1,100000));
-        employees.add(new Employee(4, "Joanne", 18, "Female",1, 100000));
-        employees.add(new Employee(5, "John", 18, "Male",1, 100000));
-        employees.add(new Employee(6, "Johnson", 18, "Male", 1,100000));
-        employees.add(new Employee(7, "Nicole", 18, "Female",1,100000));
+        employees.add(new Employee(4, "Joanne", 18, "Female",2, 100000));
+        employees.add(new Employee(5, "John", 18, "Male",2, 100000));
+        employees.add(new Employee(6, "Johnson", 18, "Male", 2,100000));
+        employees.add(new Employee(7, "Nicole", 18, "Female",2,100000));
+        employees.add(new Employee(8, "Gloria", 18, "Female",3,100000));
     }
 
 
@@ -74,7 +75,7 @@ public class EmployeeRepository {
         employees.clear();
     }
 
-    public List<Employee> getEmployeesByCompanyId(Integer companyId) {
+    public List<Employee> findByCompanyId(Integer companyId) {
         return employees.stream()
                 .filter(employee -> employee.getCompanyId().equals(companyId))
                 .collect(Collectors.toList());

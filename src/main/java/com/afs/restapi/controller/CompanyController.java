@@ -13,9 +13,11 @@ import java.util.List;
 @RequestMapping("companies")
 public class CompanyController {
     private final CompanyService companyService;
+    private final EmployeeService employeeService;
 
-    public CompanyController(CompanyService companyService) {
+    public CompanyController(CompanyService companyService, EmployeeService employeeService) {
         this.companyService = companyService;
+        this.employeeService = employeeService;
     }
 
     @GetMapping
@@ -30,6 +32,7 @@ public class CompanyController {
 
     @GetMapping("/{id}/employees")
     public List<Employee> getAllEmployeesByCompanyId(@PathVariable Integer id) {
+
         return companyService.findAllEmployeesByCompanyId(id);
     }
 

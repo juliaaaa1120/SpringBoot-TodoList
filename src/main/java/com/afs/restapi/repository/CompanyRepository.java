@@ -73,4 +73,9 @@ public class CompanyRepository {
     public void clearAll() {
         companies.clear();
     }
+
+    public void updateEmployees(Integer companyId, List<Employee> employees) {
+        Company company = findById(companyId);
+        company.setEmployees(employees);
+    }
 }

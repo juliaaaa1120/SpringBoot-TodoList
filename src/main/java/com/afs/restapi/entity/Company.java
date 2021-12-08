@@ -1,11 +1,12 @@
 package com.afs.restapi.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Company {
     private Integer id;
     private String companyName;
-    private List<Employee> employees;
+    private List<Employee> employees = new ArrayList<>();
 
     public Company(int id, String companyName) {
         this.id = id;

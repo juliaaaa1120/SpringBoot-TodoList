@@ -4,20 +4,28 @@ import com.afs.restapi.entity.Company;
 import com.afs.restapi.entity.Employee;
 import com.afs.restapi.repository.CompanyRepository;
 import com.afs.restapi.repository.EmployeeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CompanyService {
     private final CompanyRepository companyRepository;
+
+    @Autowired
+    private EmployeeService employeeService;
 
     public CompanyService(CompanyRepository companyRepository) {
         this.companyRepository = companyRepository;
     }
 
     public List<Company> findAll() {
-        return companyRepository.findAll();
+        List<Company> companies = companyRepository.findAll().stream()
+                .map(company -> updateEmployees(company.getId()))
+                .collect(Collectors.toList());
+        return companies;
     }
 
     public Company edit(Integer id, Company updatedCompany) {
@@ -49,5 +57,12 @@ public class CompanyService {
 
     public Company remove(Integer id) {
         return companyRepository.remove(id);
+    }
+
+    public Company updateEmployees(Integer companyId) {
+        Company company = findById(companyId);
+        List<Employee> employees = employeeService.getEmployeesByCompanyId(companyId);
+        companyRepository.updateEmployees(companyId, employees);
+        return company;
     }
 }

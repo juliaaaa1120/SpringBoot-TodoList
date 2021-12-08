@@ -41,15 +41,15 @@ public class EmployeeService {
         return employeeRepository.findByPage(page, pageSize);
     }
 
+    public List<Employee> getEmployeesByCompanyId(Integer companyId) {
+        return employeeRepository.findByCompanyId(companyId);
+    }
+
     public Employee create(Employee employee) {
         return employeeRepository.create(employee);
     }
 
     public Employee remove(Integer id) {
         return employeeRepository.remove(id);
-    }
-
-    public List<Employee> getEmployeesByCompanyId(Integer companyId) {
-        return employeeRepository.getEmployeesByCompanyId(companyId);
     }
 }
