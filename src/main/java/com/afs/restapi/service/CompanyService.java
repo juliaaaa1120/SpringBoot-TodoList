@@ -58,6 +58,7 @@ public class CompanyService {
     }
 
     public Company remove(Integer id) {
+        updateEmployees(id);
         return companyRepository.remove(id);
     }
 
