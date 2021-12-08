@@ -97,26 +97,28 @@ public class EmployeeControllerTest {
         //then
     }
 
-//    @Test
-//    void should_get_employees_by_page_when_perform_get_given_employees_page_and_page_size() throws Exception {
-//        //given
-//        Employee employee1 = new Employee(1, "Julia", 18, "Female", 100000);
-//        employeeRepository.create(employee1);
-//        Employee employee2 = new Employee(2, "Jason", 18, "Male", 100000);
-//        employeeRepository.create(employee2);
-//        Employee employee3 = new Employee(3, "Gloria", 18, "Female", 100000);
-//        employeeRepository.create(employee3);
-//        //when
-//        mockMvc.perform(MockMvcRequestBuilders.get("/employees")
-//                .param("gender", "Female"))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$[1].id").value(3))
-//                .andExpect(jsonPath("$[1].name").value("Gloria"))
-//                .andExpect(jsonPath("$[1].age").value(18))
-//                .andExpect(jsonPath("$[1].gender").value("Female"))
-//                .andExpect(jsonPath("$[1].salary").value(100000));
-//        //then
-//    }
+    @Test
+    void should_get_employees_by_page_when_perform_get_given_employees_page_and_page_size() throws Exception {
+        //given
+        Employee employee1 = new Employee(1, "Julia", 18, "Female", 100000);
+        employeeRepository.create(employee1);
+        Employee employee2 = new Employee(2, "Jason", 18, "Male", 100000);
+        employeeRepository.create(employee2);
+        Employee employee3 = new Employee(3, "Gloria", 18, "Female", 100000);
+        employeeRepository.create(employee3);
+
+        //when
+        mockMvc.perform(MockMvcRequestBuilders.get("/employees")
+                .param("page", "2")
+                .param("pageSize", "2"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(3))
+                .andExpect(jsonPath("$[0].name").value("Gloria"))
+                .andExpect(jsonPath("$[0].age").value(18))
+                .andExpect(jsonPath("$[0].gender").value("Female"))
+                .andExpect(jsonPath("$[0].salary").value(100000));
+        //then
+    }
 
     @Test
     void should_return_employee_when_perform_post_given_employee() throws Exception {
