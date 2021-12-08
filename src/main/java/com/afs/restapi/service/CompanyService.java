@@ -42,11 +42,11 @@ public class CompanyService {
     public List<Company> findByPage(Integer page, Integer pageSize) {
         return companyRepository.findByPage(page, pageSize);
     }
-//
-//    public Employee create(Employee employee) {
-//        return employeeRepository.create(employee);
-//    }
-//
+
+    public Company create(Company company) {
+        return companyRepository.create(company);
+    }
+
 //    public Employee remove(Integer id) {
 //        return employeeRepository.remove(id);
 //    }

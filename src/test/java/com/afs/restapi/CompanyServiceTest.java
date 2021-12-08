@@ -116,21 +116,25 @@ public class CompanyServiceTest {
         assertEquals(displayedCompanies, actual);
     }
 
-//    @Test
-//    void should_return_employee_when_create_employee_given_employee() {
-//        //given
-//        Employee employee = new Employee(1, "Julia", 22, "Female", 100000);
-//
-//        given(mockCompanyRepository.create(employee))
-//                .willReturn(employee);
-//
-//        //when
-//        Employee actual = companyService.create(employee);
-//
-//        //then
-//        assertEquals(employee, actual);
-//    }
-//
+    @Test
+    void should_return_company_when_create_company_given_company() {
+        //given
+        Company company = new Company(1, "OOCL", Arrays.asList(
+                new Employee(1, "Julia", 18, "Female", 100000),
+                new Employee(2, "Jason", 18, "Male", 100000),
+                new Employee(3, "Klaus", 18, "Male", 100000)
+        ));
+
+        given(mockCompanyRepository.create(company))
+                .willReturn(company);
+
+        //when
+        Company actual = companyService.create(company);
+
+        //then
+        assertEquals(company, actual);
+    }
+
 //    @Test
 //    void should_return_updated_employee_when_edit_employee_given_updated_employee() {
 //        //given
