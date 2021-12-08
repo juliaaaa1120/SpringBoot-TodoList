@@ -82,27 +82,40 @@ public class CompanyServiceTest {
         assertEquals(employees, actual);
     }
 
-//    @Test
-//    void should_return_employees_by_page_when_find_by_page_given_page_and_page_size() {
-//        //given
-//        List<Employee> displayedEmployees = new ArrayList<>();
-//        Employee employee1 = new Employee(1, "Julia", 22, "Female", 100000);
-//        Employee employee2 = new Employee(2, "Jason", 22, "Male", 100000);
-//        Employee employee3 = new Employee(3, "Joanne", 22, "Female", 100000);
-//        Employee employee4 = new Employee(3, "John", 22, "Male", 100000);
-//        displayedEmployees.add(employee3);
-//        displayedEmployees.add(employee4);
-//
-//        given(mockCompanyRepository.findByPage(2,2))
-//                .willReturn(displayedEmployees);
-//
-//        //when
-//        List<Employee> actual = companyService.findByPage(2,2);
-//
-//        //then
-//        assertEquals(displayedEmployees, actual);
-//    }
-//
+    @Test
+    void should_return_companies_by_page_when_find_by_page_given_page_and_page_size() {
+        //given
+        List<Company> displayedCompanies = new ArrayList<>();
+        Company company1 = new Company(1, "OOCL", Arrays.asList(
+                new Employee(1, "Julia", 18, "Female", 100000),
+                new Employee(2, "Jason", 18, "Male", 100000),
+                new Employee(3, "Klaus", 18, "Male", 100000)
+        ));
+        Company company2 = new Company(2, "DHL", Arrays.asList(
+                new Employee(4, "Joanne", 18, "Female", 100000),
+                new Employee(5, "John", 18, "Male", 100000),
+                new Employee(6, "Johnson", 18, "Male", 100000),
+                new Employee(7, "Nicole", 18, "Female", 100000)
+        ));
+        Company company3 = new Company(3, "SF Express", Arrays.asList(
+                new Employee(8, "Gloria", 18, "Female", 100000)
+        ));
+        Company company4 = new Company(4, "Disney", Arrays.asList(
+                new Employee(9, "Koby", 18, "Male", 100000)
+        ));
+        displayedCompanies.add(company3);
+        displayedCompanies.add(company4);
+
+        given(mockCompanyRepository.findByPage(2,2))
+                .willReturn(displayedCompanies);
+
+        //when
+        List<Company> actual = companyService.findByPage(2,2);
+
+        //then
+        assertEquals(displayedCompanies, actual);
+    }
+
 //    @Test
 //    void should_return_employee_when_create_employee_given_employee() {
 //        //given

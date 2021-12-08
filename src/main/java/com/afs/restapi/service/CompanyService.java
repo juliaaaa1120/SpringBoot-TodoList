@@ -39,9 +39,9 @@ public class CompanyService {
         return companyRepository.findAllEmployeesByCompanyId(id);
     }
 
-//    public List<Employee> findByPage(Integer page, Integer pageSize) {
-//        return employeeRepository.findByPage(page, pageSize);
-//    }
+    public List<Company> findByPage(Integer page, Integer pageSize) {
+        return companyRepository.findByPage(page, pageSize);
+    }
 //
 //    public Employee create(Employee employee) {
 //        return employeeRepository.create(employee);
