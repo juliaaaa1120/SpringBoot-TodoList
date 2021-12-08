@@ -34,7 +34,29 @@ public class CompanyControllerTest {
     }
 
     @Test
-    void should_get_all_employees_when_perform_get_given_employees() throws Exception {
+    void should_get_all_companies_when_perform_get_given_companies() throws Exception {
+        //given
+        Company company1 = new Company(1, "OOCL", Arrays.asList(
+                new Employee(1, "Julia", 18, "Female", 100000),
+                new Employee(2, "Jason", 18, "Male", 100000),
+                new Employee(3, "Klaus", 18, "Male", 100000)
+        ));
+        companyRepository.create(company1);
+        //when
+        mockMvc.perform(MockMvcRequestBuilders.get("/companies"))
+//        mockMvc.perform(MockMvcRequestBuilders.get("/employees/{id}", employee.getId()))
+//        mockMvc.perform(MockMvcRequestBuilders.get("/employees/" + employee.getId()))
+//        mockMvc.perform(MockMvcRequestBuilders.get("/employees?gender=" + "Male"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].id").value(1))
+                .andExpect(jsonPath("$[0].companyName").value("OOCL"))
+                .andExpect(jsonPath("$[0].employees", hasSize(3)));
+        //then
+    }
+
+    @Test
+    void should_get_company_by_id_when_perform_get_given_company_id() throws Exception {
         //given
         Company company1 = new Company(1, "OOCL", Arrays.asList(
                 new Employee(1, "Julia", 18, "Female", 100000),
@@ -47,35 +69,14 @@ public class CompanyControllerTest {
         ));
         companyRepository.create(company2);
         //when
-        mockMvc.perform(MockMvcRequestBuilders.get("/companies"))
-//        mockMvc.perform(MockMvcRequestBuilders.get("/employees/{id}", employee.getId()))
-//        mockMvc.perform(MockMvcRequestBuilders.get("/employees/" + employee.getId()))
-//        mockMvc.perform(MockMvcRequestBuilders.get("/employees?gender=" + "Male"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/companies/{id}", company2.getId()))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[0].id").value(1))
-                .andExpect(jsonPath("$[0].companyName").value("OOCL"));
+                .andExpect(jsonPath("$.id").value(2))
+                .andExpect(jsonPath("$.companyName").value("SF Express"))
+                .andExpect(jsonPath("$.employees", hasSize(1)));
         //then
     }
 
-//    @Test
-//    void should_get_employee_by_id_when_perform_get_given_employee_id() throws Exception {
-//        //given
-//        Employee employee1 = new Employee(1, "Julia", 18, "Female", 100000);
-//        companyRepository.create(employee1);
-//        Employee employee2 = new Employee(2, "Jason", 18, "Male", 100000);
-//        companyRepository.create(employee2);
-//        //when
-//        mockMvc.perform(MockMvcRequestBuilders.get("/employees/{id}", employee2.getId()))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.id").value(2))
-//                .andExpect(jsonPath("$.name").value("Jason"))
-//                .andExpect(jsonPath("$.age").value(18))
-//                .andExpect(jsonPath("$.gender").value("Male"))
-//                .andExpect(jsonPath("$.salary").value(100000));
-//        //then
-//    }
-//
 //    @Test
 //    void should_get_employees_by_gender_when_perform_get_given_employee_gender() throws Exception {
 //        //given
