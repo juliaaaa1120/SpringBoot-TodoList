@@ -199,31 +199,41 @@ public class CompanyControllerTest {
                 .andExpect(jsonPath("$.employees[0].salary").value(100000));
     }
 
-//    @Test
-//    void should_return_updated_employee_when_perform_put_given_employee_id() throws Exception {
-//        //given
-//        Employee employee1 = new Employee(1, "Julia", 18, "Female", 100000);
-//        companyRepository.create(employee1);
-//        Employee employee2 = new Employee(2, "Jason", 18, "Male", 100000);
-//        companyRepository.create(employee2);
-//        Employee employee3 = new Employee(3, "Gloria", 18, "Female", 100000);
-//        companyRepository.create(employee3);
-//        String updatedEmployee = "{\n" +
-//                "        \"age\": 30,\n" +
-//                "        \"salary\": 500000\n" +
-//                "}";
-//        //when
-//        mockMvc.perform(MockMvcRequestBuilders.put("/employees/{id}", employee2.getId())
-//                    .contentType(MediaType.APPLICATION_JSON)
-//                    .content(updatedEmployee))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.id").value(2))
-//                .andExpect(jsonPath("$.name").value("Jason"))
-//                .andExpect(jsonPath("$.age").value(30))
-//                .andExpect(jsonPath("$.gender").value("Male"))
-//                .andExpect(jsonPath("$.salary").value(500000));
-//    }
-//
+    @Test
+    void should_return_updated_employee_when_perform_put_given_employee_id() throws Exception {
+        //given
+        Company company = new Company(1, "OOCL", Arrays.asList(
+                new Employee(1, "Julia", 18, "Female", 100000),
+                new Employee(2, "Jason", 18, "Male", 100000),
+                new Employee(3, "Klaus", 18, "Male", 100000)
+        ));
+        companyRepository.create(company);
+        String updatedCompany = "{\n" +
+                "    \"companyName\": \"Disney\",\n" +
+                "    \"employees\": [\n" +
+                "        {\n" +
+                "            \"id\": 1,\n" +
+                "            \"name\": \"Gloria\",\n" +
+                "            \"age\": 18,\n" +
+                "            \"gender\": \"Female\",\n" +
+                "            \"salary\": 100000\n" +
+                "        }\n" +
+                "    ]\n" +
+                "}";
+        //when
+        mockMvc.perform(MockMvcRequestBuilders.put("/companies/{id}", company.getId())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(updatedCompany))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.companyName").value("Disney"))
+                .andExpect(jsonPath("$.employees[0].id").value(1))
+                .andExpect(jsonPath("$.employees[0].name").value("Gloria"))
+                .andExpect(jsonPath("$.employees[0].age").value(18))
+                .andExpect(jsonPath("$.employees[0].gender").value("Female"))
+                .andExpect(jsonPath("$.employees[0].salary").value(100000));
+    }
+
 //    @Test
 //    void should_return_null_when_perform_delete_given_employee_id() throws Exception {
 //        //given
