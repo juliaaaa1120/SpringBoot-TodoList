@@ -36,6 +36,23 @@ public class EmployeeServiceTest {
     }
 
     @Test
+    void should_return_employee_by_id_when_find_by_id_given_employee_id() {
+        //given
+        Employee employee1 = new Employee(1, "Julia", 22, "Female", 100000);
+        Employee employee2 = new Employee(2, "Jason", 22, "Male", 100000);
+        Employee employee3 = new Employee(3, "Joanne", 22, "Female", 100000);
+
+        given(mockEmployeeRepository.findById(employee3.getId()))
+                .willReturn(employee3);
+
+        //when
+        Employee actual = employeeService.findById(employee3.getId());
+
+        //then
+        assertEquals(employee3, actual);
+    }
+
+    @Test
     void should_return_updated_employee_when_edit_employee_given_updated_employee() {
         //given
         Employee employee = new Employee(1, "Julia", 22, "Female", 100000);
