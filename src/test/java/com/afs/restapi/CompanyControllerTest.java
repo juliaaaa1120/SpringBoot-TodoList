@@ -39,12 +39,12 @@ public class CompanyControllerTest {
     @Test
     void should_get_all_companies_when_perform_get_given_companies() throws Exception {
         //given
-        Company company1 = new Company(1, "OOCL", Arrays.asList(
+        Company company = new Company(1, "OOCL", Arrays.asList(
                 new Employee(1, "Julia", 18, "Female", 100000),
                 new Employee(2, "Jason", 18, "Male", 100000),
                 new Employee(3, "Klaus", 18, "Male", 100000)
         ));
-        companyRepository.create(company1);
+        companyRepository.create(company);
         //when
         mockMvc.perform(MockMvcRequestBuilders.get("/companies"))
 //        mockMvc.perform(MockMvcRequestBuilders.get("/employees/{id}", employee.getId()))

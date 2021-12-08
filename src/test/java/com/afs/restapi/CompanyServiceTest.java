@@ -48,7 +48,7 @@ public class CompanyServiceTest {
     @Test
     void should_return_company_by_id_when_find_by_id_given_company_id() {
         //given
-      Company company = new Company(1, "OOCL", Arrays.asList(
+        Company company = new Company(1, "OOCL", Arrays.asList(
                 new Employee(1, "Julia", 18, "Female", 100000),
                 new Employee(2, "Jason", 18, "Male", 100000),
                 new Employee(3, "Klaus", 18, "Male", 100000)
@@ -64,26 +64,24 @@ public class CompanyServiceTest {
         assertEquals(company, actual);
     }
 
-//    @Test
-//    void should_return_employees_by_gender_when_find_by_gender_given_employee_gender() {
-//        //given
-//        List<Employee> femaleEmployees = new ArrayList<>();
-//        Employee employee1 = new Employee(1, "Julia", 22, "Female", 100000);
-//        Employee employee2 = new Employee(2, "Jason", 22, "Male", 100000);
-//        Employee employee3 = new Employee(3, "Joanne", 22, "Female", 100000);
-//        femaleEmployees.add(employee1);
-//        femaleEmployees.add(employee3);
-//
-//        given(mockEmployeeRepository.findByGender("Female"))
-//                .willReturn(femaleEmployees);
-//
-//        //when
-//        List<Employee> actual = companyService.findByGender("Female");
-//
-//        //then
-//        assertEquals(femaleEmployees, actual);
-//    }
-//
+    @Test
+    void should_return_all_employees_in_company_when_find_all_employees_by_company_id_given_company_id_employees() {
+        //given
+        List<Employee> employees = Arrays.asList(new Employee(1, "Julia", 18, "Female", 100000),
+                new Employee(2, "Jason", 18, "Male", 100000),
+                new Employee(3, "Klaus", 18, "Male", 100000));
+        Company company = new Company(1, "OOCL", employees);
+
+        given(mockCompanyRepository.findAllEmployeesByCompanyId(company.getId()))
+                .willReturn(employees);
+
+        //when
+        List<Employee> actual = companyService.findAllEmployeesByCompanyId(company.getId());
+
+        //then
+        assertEquals(employees, actual);
+    }
+
 //    @Test
 //    void should_return_employees_by_page_when_find_by_page_given_page_and_page_size() {
 //        //given
@@ -95,7 +93,7 @@ public class CompanyServiceTest {
 //        displayedEmployees.add(employee3);
 //        displayedEmployees.add(employee4);
 //
-//        given(mockEmployeeRepository.findByPage(2,2))
+//        given(mockCompanyRepository.findByPage(2,2))
 //                .willReturn(displayedEmployees);
 //
 //        //when
@@ -110,7 +108,7 @@ public class CompanyServiceTest {
 //        //given
 //        Employee employee = new Employee(1, "Julia", 22, "Female", 100000);
 //
-//        given(mockEmployeeRepository.create(employee))
+//        given(mockCompanyRepository.create(employee))
 //                .willReturn(employee);
 //
 //        //when
@@ -125,11 +123,11 @@ public class CompanyServiceTest {
 //        //given
 //        Employee employee = new Employee(1, "Julia", 22, "Female", 100000);
 //        Employee updatedEmployee = new Employee(1, "Julia", 25, "Female", 500000);
-//        given(mockEmployeeRepository.findById(any()))
+//        given(mockCompanyRepository.findById(any()))
 //                .willReturn(employee);
 //        employee.setAge(updatedEmployee.getAge());
 //        employee.setSalary(updatedEmployee.getSalary());
-//        given(mockEmployeeRepository.save(any(), any(Employee.class)))
+//        given(mockCompanyRepository.save(any(), any(Employee.class)))
 //                .willReturn(employee);
 //
 //        //when
@@ -145,7 +143,7 @@ public class CompanyServiceTest {
 //        Employee employee1 = new Employee(1, "Julia", 22, "Female", 100000);
 //        Employee employee2 = new Employee(2, "Jason", 22, "Male", 100000);
 //
-//        given(mockEmployeeRepository.remove(employee1.getId()))
+//        given(mockCompanyRepository.remove(employee1.getId()))
 //                .willReturn(employee1);
 //
 //        //when

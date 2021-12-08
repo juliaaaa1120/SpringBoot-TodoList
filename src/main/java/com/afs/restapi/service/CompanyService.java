@@ -34,11 +34,11 @@ public class CompanyService {
     public Company findById(Integer id) {
         return companyRepository.findById(id);
     }
-//
-//    public List<Employee> findByGender(String gender) {
-//        return employeeRepository.findByGender(gender);
-//    }
-//
+
+    public List<Employee> findAllEmployeesByCompanyId(Integer id) {
+        return companyRepository.findAllEmployeesByCompanyId(id);
+    }
+
 //    public List<Employee> findByPage(Integer page, Integer pageSize) {
 //        return employeeRepository.findByPage(page, pageSize);
 //    }
