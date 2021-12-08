@@ -126,4 +126,20 @@ public class EmployeeServiceTest {
         //then
         assertEquals(employee, actual);
     }
+
+    @Test
+    void should_return_null_when_delete_employee_given_employee_id() {
+        //given
+        Employee employee1 = new Employee(1, "Julia", 22, "Female", 100000);
+        Employee employee2 = new Employee(2, "Jason", 22, "Male", 100000);
+
+        given(mockEmployeeRepository.remove(employee1.getId()))
+                .willReturn(employee1);
+
+        //when
+        Employee actual = employeeService.remove(employee1.getId());
+
+        //then
+        assertEquals(employee1, actual);
+    }
 }

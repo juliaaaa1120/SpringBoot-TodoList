@@ -1,9 +1,12 @@
 package com.afs.restapi;
 
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 
+@Service
 public class EmployeeService {
-    private EmployeeRepository employeeRepository;
+    private final EmployeeRepository employeeRepository;
 
     public EmployeeService(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
@@ -38,5 +41,9 @@ public class EmployeeService {
 
     public Employee create(Employee employee) {
         return employeeRepository.create(employee);
+    }
+
+    public Employee remove(Integer id) {
+        return employeeRepository.remove(id);
     }
 }
