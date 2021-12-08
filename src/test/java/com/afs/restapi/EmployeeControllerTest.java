@@ -11,7 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -49,6 +49,7 @@ public class EmployeeControllerTest {
                 .andExpect(jsonPath("$[0].name").value("Julia"))
                 .andExpect(jsonPath("$[0].age").value(18))
                 .andExpect(jsonPath("$[0].gender").value("Female"))
+                .andExpect(jsonPath("$[0].companyId").value(1))
                 .andExpect(jsonPath("$[0].salary").value(100000));
         //then
     }
@@ -58,7 +59,7 @@ public class EmployeeControllerTest {
         //given
         Employee employee1 = new Employee(1, "Julia", 18, "Female",1, 100000);
         employeeRepository.create(employee1);
-        Employee employee2 = new Employee(2, "Jason", 18, "Male", 1,100000);
+        Employee employee2 = new Employee(2, "Jason", 18, "Male", 2,100000);
         employeeRepository.create(employee2);
         //when
         mockMvc.perform(MockMvcRequestBuilders.get("/employees/{id}", employee2.getId()))
@@ -67,6 +68,7 @@ public class EmployeeControllerTest {
                 .andExpect(jsonPath("$.name").value("Jason"))
                 .andExpect(jsonPath("$.age").value(18))
                 .andExpect(jsonPath("$.gender").value("Male"))
+                .andExpect(jsonPath("$.companyId").value(2))
                 .andExpect(jsonPath("$.salary").value(100000));
         //then
     }
@@ -76,25 +78,21 @@ public class EmployeeControllerTest {
         //given
         Employee employee1 = new Employee(1, "Julia", 18, "Female", 1,100000);
         employeeRepository.create(employee1);
-        Employee employee2 = new Employee(2, "Jason", 18, "Male",1, 100000);
+        Employee employee2 = new Employee(2, "Jason", 18, "Male",2, 100000);
         employeeRepository.create(employee2);
-        Employee employee3 = new Employee(3, "Gloria", 18, "Female", 1,100000);
+        Employee employee3 = new Employee(3, "Gloria", 18, "Female", 3,100000);
         employeeRepository.create(employee3);
         //when
         mockMvc.perform(MockMvcRequestBuilders.get("/employees")
                     .param("gender", "Female"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[0].id").value(1))
-                .andExpect(jsonPath("$[0].name").value("Julia"))
-                .andExpect(jsonPath("$[0].age").value(18))
-                .andExpect(jsonPath("$[0].gender").value("Female"))
-                .andExpect(jsonPath("$[0].salary").value(100000))
-                .andExpect(jsonPath("$[1].id").value(3))
-                .andExpect(jsonPath("$[1].name").value("Gloria"))
-                .andExpect(jsonPath("$[1].age").value(18))
-                .andExpect(jsonPath("$[1].gender").value("Female"))
-                .andExpect(jsonPath("$[1].salary").value(100000));
+                .andExpect(jsonPath("$[*].id").value(containsInAnyOrder(1, 3)))
+                .andExpect(jsonPath("$[*].name").value(containsInAnyOrder("Julia", "Gloria")))
+                .andExpect(jsonPath("$[*].age").value(containsInAnyOrder(18, 18)))
+                .andExpect(jsonPath("$[*].gender").value(containsInAnyOrder("Female", "Female")))
+                .andExpect(jsonPath("$[*].companyId").value(containsInAnyOrder(1, 3)))
+                .andExpect(jsonPath("$[*].salary").value(containsInAnyOrder(100000, 100000)));
         //then
     }
 
@@ -103,11 +101,11 @@ public class EmployeeControllerTest {
         //given
         Employee employee1 = new Employee(1, "Julia", 18, "Female", 1,100000);
         employeeRepository.create(employee1);
-        Employee employee2 = new Employee(2, "Jason", 18, "Male", 1,100000);
+        Employee employee2 = new Employee(2, "Jason", 18, "Male", 2,100000);
         employeeRepository.create(employee2);
-        Employee employee3 = new Employee(3, "Gloria", 18, "Female", 1,100000);
+        Employee employee3 = new Employee(3, "Gloria", 18, "Female", 3,100000);
         employeeRepository.create(employee3);
-        Employee employee4 = new Employee(4, "Johnson", 18, "Male", 1,100000);
+        Employee employee4 = new Employee(4, "Johnson", 18, "Male", 2,100000);
         employeeRepository.create(employee4);
         //when
         mockMvc.perform(MockMvcRequestBuilders.get("/employees")
@@ -115,16 +113,12 @@ public class EmployeeControllerTest {
                 .param("pageSize", "2"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[0].id").value(3))
-                .andExpect(jsonPath("$[0].name").value("Gloria"))
-                .andExpect(jsonPath("$[0].age").value(18))
-                .andExpect(jsonPath("$[0].gender").value("Female"))
-                .andExpect(jsonPath("$[0].salary").value(100000))
-                .andExpect(jsonPath("$[1].id").value(4))
-                .andExpect(jsonPath("$[1].name").value("Johnson"))
-                .andExpect(jsonPath("$[1].age").value(18))
-                .andExpect(jsonPath("$[1].gender").value("Male"))
-                .andExpect(jsonPath("$[1].salary").value(100000));
+                .andExpect(jsonPath("$[*].id").value(containsInAnyOrder(3, 4)))
+                .andExpect(jsonPath("$[*].name").value(containsInAnyOrder("Gloria", "Johnson")))
+                .andExpect(jsonPath("$[*].age").value(containsInAnyOrder(18, 18)))
+                .andExpect(jsonPath("$[*].gender").value(containsInAnyOrder("Female", "Male")))
+                .andExpect(jsonPath("$[*].companyId").value(containsInAnyOrder(2, 3)))
+                .andExpect(jsonPath("$[*].salary").value(containsInAnyOrder(100000, 100000)));
         //then
     }
 
@@ -135,6 +129,7 @@ public class EmployeeControllerTest {
                 "        \"name\": \"Koby\",\n" +
                 "        \"age\": 18,\n" +
                 "        \"gender\": \"Male\",\n" +
+                "        \"companyId\": \"3\",\n" +
                 "        \"salary\": 100000\n" +
                 "}";
         //when
@@ -146,6 +141,7 @@ public class EmployeeControllerTest {
                 .andExpect(jsonPath("$.name").value("Koby"))
                 .andExpect(jsonPath("$.age").value(18))
                 .andExpect(jsonPath("$.gender").value("Male"))
+                .andExpect(jsonPath("$.companyId").value(3))
                 .andExpect(jsonPath("$.salary").value(100000));
     }
 
@@ -154,9 +150,9 @@ public class EmployeeControllerTest {
         //given
         Employee employee1 = new Employee(1, "Julia", 18, "Female", 1,100000);
         employeeRepository.create(employee1);
-        Employee employee2 = new Employee(2, "Jason", 18, "Male",1, 100000);
+        Employee employee2 = new Employee(2, "Jason", 18, "Male",2, 100000);
         employeeRepository.create(employee2);
-        Employee employee3 = new Employee(3, "Gloria", 18, "Female", 1,100000);
+        Employee employee3 = new Employee(3, "Gloria", 18, "Female", 3,100000);
         employeeRepository.create(employee3);
         String updatedEmployee = "{\n" +
                 "        \"age\": 30,\n" +
@@ -171,6 +167,7 @@ public class EmployeeControllerTest {
                 .andExpect(jsonPath("$.name").value("Jason"))
                 .andExpect(jsonPath("$.age").value(30))
                 .andExpect(jsonPath("$.gender").value("Male"))
+                .andExpect(jsonPath("$.companyId").value(2))
                 .andExpect(jsonPath("$.salary").value(500000));
     }
 
@@ -179,9 +176,9 @@ public class EmployeeControllerTest {
         //given
         Employee employee1 = new Employee(1, "Julia", 18, "Female", 1,100000);
         employeeRepository.create(employee1);
-        Employee employee2 = new Employee(2, "Jason", 18, "Male", 1,100000);
+        Employee employee2 = new Employee(2, "Jason", 18, "Male", 2,100000);
         employeeRepository.create(employee2);
-        Employee employee3 = new Employee(3, "Gloria", 18, "Female",1, 100000);
+        Employee employee3 = new Employee(3, "Gloria", 18, "Female",3, 100000);
         employeeRepository.create(employee3);
         //when
         mockMvc.perform(MockMvcRequestBuilders.delete("/employees/{id}", employee2.getId()))
@@ -190,6 +187,7 @@ public class EmployeeControllerTest {
                 .andExpect(jsonPath("$.name").value("Jason"))
                 .andExpect(jsonPath("$.age").value(18))
                 .andExpect(jsonPath("$.gender").value("Male"))
+                .andExpect(jsonPath("$.companyId").value(2))
                 .andExpect(jsonPath("$.salary").value(100000));
         assertEquals(2, employeeRepository.findAll().size());
     }
