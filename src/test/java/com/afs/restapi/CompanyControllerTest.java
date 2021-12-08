@@ -136,26 +136,28 @@ public class CompanyControllerTest {
         companyRepository.create(company3);
         Company company4 = new Company(4, "Disney");
         companyRepository.create(company4);
+        Employee employee1 = new Employee(1, "Julia", 18, "Female",1, 100000);
+        employeeRepository.create(employee1);
+        Employee employee2 = new Employee(2, "Jason", 18, "Male",2, 100000);
+        employeeRepository.create(employee2);
+        Employee employee3 = new Employee(3, "Klaus", 18, "Male", 3,100000);
+        employeeRepository.create(employee3);
+        Employee employee4 = new Employee(4, "Gloria", 18, "Female", 4,100000);
+        employeeRepository.create(employee4);
         //when
         mockMvc.perform(MockMvcRequestBuilders.get("/companies")
                 .param("page", "2")
                 .param("pageSize", "2"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[0].id").value(3))
-                .andExpect(jsonPath("$[0].companyName").value("SF Express"))
-                .andExpect(jsonPath("$[0].employees[0].id").value(8))
-                .andExpect(jsonPath("$[0].employees[0].name").value("Gloria"))
-                .andExpect(jsonPath("$[0].employees[0].age").value(18))
-                .andExpect(jsonPath("$[0].employees[0].gender").value("Female"))
-                .andExpect(jsonPath("$[0].employees[0].salary").value(100000))
-                .andExpect(jsonPath("$[1].id").value(4))
-                .andExpect(jsonPath("$[1].companyName").value("Disney"))
-                .andExpect(jsonPath("$[1].employees[0].id").value(9))
-                .andExpect(jsonPath("$[1].employees[0].name").value("Koby"))
-                .andExpect(jsonPath("$[1].employees[0].age").value(18))
-                .andExpect(jsonPath("$[1].employees[0].gender").value("Male"))
-                .andExpect(jsonPath("$[1].employees[0].salary").value(100000));
+                .andExpect(jsonPath("$[*].id").value(containsInAnyOrder(3, 4)))
+                .andExpect(jsonPath("$[*].companyName").value(containsInAnyOrder("SF Express", "Disney")))
+                .andExpect(jsonPath("$[*].employees[*].id").value(containsInAnyOrder(3, 4)))
+                .andExpect(jsonPath("$[*].employees[*].name").value(containsInAnyOrder("Klaus", "Gloria")))
+                .andExpect(jsonPath("$[*].employees[*].age").value(containsInAnyOrder(18, 18)))
+                .andExpect(jsonPath("$[*].employees[*].gender").value(containsInAnyOrder("Male", "Female")))
+                .andExpect(jsonPath("$[*].employees[*].companyId").value(containsInAnyOrder(3, 4)))
+                .andExpect(jsonPath("$[*].employees[*].salary").value(containsInAnyOrder(100000, 100000)));
 
         //then
     }

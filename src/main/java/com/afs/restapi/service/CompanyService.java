@@ -49,6 +49,7 @@ public class CompanyService {
     }
 
     public List<Company> findByPage(Integer page, Integer pageSize) {
+        List<Company> companies = findAll();
         return companyRepository.findByPage(page, pageSize);
     }
 
