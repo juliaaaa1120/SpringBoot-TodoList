@@ -182,17 +182,14 @@ public class CompanyControllerTest {
         //given
         Company company = new Company(1, "OOCL");
         companyRepository.create(company);
+        Employee employee1 = new Employee(1, "Julia", 18, "Female",1, 100000);
+        employeeRepository.create(employee1);
+        Employee employee2 = new Employee(2, "Jason", 18, "Male",1, 100000);
+        employeeRepository.create(employee2);
+        Employee employee3 = new Employee(3, "Klaus", 18, "Male", 1,100000);
+        employeeRepository.create(employee3);
         String updatedCompany = "{\n" +
-                "    \"companyName\": \"Disney\",\n" +
-                "    \"employees\": [\n" +
-                "        {\n" +
-                "            \"id\": 1,\n" +
-                "            \"name\": \"Gloria\",\n" +
-                "            \"age\": 18,\n" +
-                "            \"gender\": \"Female\",\n" +
-                "            \"salary\": 100000\n" +
-                "        }\n" +
-                "    ]\n" +
+                "    \"companyName\": \"Disney\"\n" +
                 "}";
         //when
         mockMvc.perform(MockMvcRequestBuilders.put("/companies/{id}", company.getId())
@@ -201,11 +198,13 @@ public class CompanyControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.companyName").value("Disney"))
-                .andExpect(jsonPath("$.employees[0].id").value(1))
-                .andExpect(jsonPath("$.employees[0].name").value("Gloria"))
-                .andExpect(jsonPath("$.employees[0].age").value(18))
-                .andExpect(jsonPath("$.employees[0].gender").value("Female"))
-                .andExpect(jsonPath("$.employees[0].salary").value(100000));
+                .andExpect(jsonPath("$.employees", hasSize(3)))
+                .andExpect(jsonPath("$.employees[*].id").value(containsInAnyOrder(1, 2, 3)))
+                .andExpect(jsonPath("$.employees[*].name").value(containsInAnyOrder("Julia", "Jason", "Klaus")))
+                .andExpect(jsonPath("$.employees[*].age").value(containsInAnyOrder(18, 18, 18)))
+                .andExpect(jsonPath("$.employees[*].gender").value(containsInAnyOrder("Female", "Male", "Male")))
+                .andExpect(jsonPath("$.employees[*].companyId").value(containsInAnyOrder(1, 1, 1)))
+                .andExpect(jsonPath("$.employees[*].salary").value(containsInAnyOrder(100000, 100000, 100000)));
     }
 
     @Test
