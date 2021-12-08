@@ -1,7 +1,7 @@
 package com.afs.restapi;
 
-import com.jayway.jsonpath.JsonPath;
-import org.hamcrest.Matcher;
+import com.afs.restapi.entity.Employee;
+import com.afs.restapi.repository.EmployeeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,14 +9,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -182,7 +175,7 @@ public class EmployeeControllerTest {
     }
 
     @Test
-    void should_return_null_when_perform_delete_given_employee_id() throws Exception {
+    void should_return_employee_when_perform_delete_given_employee_id() throws Exception {
         //given
         Employee employee1 = new Employee(1, "Julia", 18, "Female", 100000);
         employeeRepository.create(employee1);
@@ -192,7 +185,12 @@ public class EmployeeControllerTest {
         employeeRepository.create(employee3);
         //when
         mockMvc.perform(MockMvcRequestBuilders.delete("/employees/{id}", employee2.getId()))
-                .andExpect(status().isNoContent());
+                .andExpect(status().isNoContent())
+                .andExpect(jsonPath("$.id").value(2))
+                .andExpect(jsonPath("$.name").value("Jason"))
+                .andExpect(jsonPath("$.age").value(18))
+                .andExpect(jsonPath("$.gender").value("Male"))
+                .andExpect(jsonPath("$.salary").value(100000));
         assertEquals(2, employeeRepository.findAll().size());
     }
 }
