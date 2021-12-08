@@ -131,7 +131,7 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    void should_return_null_when_delete_employee_given_employee_id() {
+    void should_return_employee_when_delete_employee_given_employee_id() {
         //given
         Employee employee1 = new Employee(1, "Julia", 22, "Female", 100000);
         Employee employee2 = new Employee(2, "Jason", 22, "Male", 100000);
