@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -55,24 +56,21 @@ public class EmployeeControllerTest {
         // then
     }
 
-//    @Test
-//    void should_get_employee_by_id_when_perform_get_given_employee_id() throws Exception {
-//        //given
-//        Employee employee1 = new Employee("1", "Julia", 18, "Female","1", 100000);
-//        employeeRepository.create(employee1);
-//        Employee employee2 = new Employee("2", "Jason", 18, "Male", "2",100000);
-//        employeeRepository.create(employee2);
-//        //when
-//        mockMvc.perform(MockMvcRequestBuilders.get("/employees/{id}", employee2.getId()))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.id").value(2))
-//                .andExpect(jsonPath("$.name").value("Jason"))
-//                .andExpect(jsonPath("$.age").value(18))
-//                .andExpect(jsonPath("$.gender").value("Male"))
-//                .andExpect(jsonPath("$.companyId").value(2))
-//                .andExpect(jsonPath("$.salary").value(100000));
-//        //then
-//    }
+    @Test
+    void should_get_employee_by_id_when_perform_get_given_employee_id() throws Exception {
+        //given
+        Employee employee1 = new Employee(null, "Julia", 18, "Female","1", 100000);
+        employeeRepositoryInMongo.insert(employee1);
+        Employee employee2 = new Employee(null, "Jason", 18, "Male", "2",100000);
+        employeeRepositoryInMongo.insert(employee2);
+        //when
+        mockMvc.perform(MockMvcRequestBuilders.get("/employees/{id}", employee2.getId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("Jason"))
+                .andExpect(jsonPath("$.age").value(18))
+                .andExpect(jsonPath("$.gender").value("Male"));
+        //then
+    }
 //
 //    @Test
 //    void should_get_employees_by_gender_when_perform_get_given_employee_gender() throws Exception {
