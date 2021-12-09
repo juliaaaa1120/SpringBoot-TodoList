@@ -120,6 +120,12 @@ public class EmployeeServiceTest {
 
         //then
         assertEquals(employee, actual);
+        assertEquals(employee.getId(), actual.getId());
+        assertEquals(employee.getName(), actual.getName());
+        assertEquals(employee.getAge(), actual.getAge());
+        assertEquals(employee.getGender(), actual.getGender());
+        assertEquals(employee.getCompanyId(), actual.getCompanyId());
+        assertEquals(employee.getSalary(), actual.getSalary());
     }
 
     @Test
@@ -139,6 +145,12 @@ public class EmployeeServiceTest {
 
         //then
         assertEquals(employee, actual);
+        assertEquals(employee.getId(), actual.getId());
+        assertEquals(employee.getName(), actual.getName());
+        assertEquals(employee.getAge(), actual.getAge());
+        assertEquals(employee.getGender(), actual.getGender());
+        assertEquals(employee.getCompanyId(), actual.getCompanyId());
+        assertEquals(employee.getSalary(), actual.getSalary());
     }
 
     @Test

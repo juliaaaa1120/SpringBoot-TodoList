@@ -1,53 +1,54 @@
-//package com.afs.restapi.service;
-//
-//import com.afs.restapi.entity.Company;
-//import com.afs.restapi.entity.Employee;
-//import com.afs.restapi.repository.CompanyRepository;
-//import com.afs.restapi.repository.EmployeeRepository;
-//import com.afs.restapi.repository.EmployeeRepositoryInMongo;
-//import org.junit.jupiter.api.Test;
-//import org.junit.jupiter.api.extension.ExtendWith;
-//import org.mockito.InjectMocks;
-//import org.mockito.Mock;
-//import org.springframework.test.context.junit.jupiter.SpringExtension;
-//
-//import java.util.ArrayList;
-//import java.util.Arrays;
-//import java.util.List;
-//import java.util.stream.Collectors;
-//import java.util.stream.Stream;
-//
-//import static org.junit.jupiter.api.Assertions.assertEquals;
-//import static org.mockito.ArgumentMatchers.any;
-//import static org.mockito.BDDMockito.given;
-//
-//@ExtendWith(SpringExtension.class)
-//public class CompanyServiceTest {
-//    @Mock
-//    CompanyRepository mockCompanyRepository;
-//    @Mock
-//    EmployeeRepository mockEmployeeRepository;
-//    @Mock
-//    EmployeeRepositoryInMongo mockEmployeeRepositoryInMongo;
-//    @InjectMocks
-//    CompanyService companyService;
-//
-//    @Test
-//    void should_return_all_companies_when_find_all_given_companies() {
-//        //given
-//        List<Company> companies = Stream.of(new Company("1", "OOCL"))
-//                .collect(Collectors.toList());
-//
-//        given(mockEmployeeRepositoryInMongo.findAll())
-//                .willReturn(companies);
-//
-//        //when
-//        List<Company> actual = companyService.findAll();
-//
-//        //then
-//        assertEquals(companies, actual);
-//    }
-//
+package com.afs.restapi.service;
+
+import com.afs.restapi.entity.Company;
+import com.afs.restapi.entity.Employee;
+import com.afs.restapi.repository.CompanyRepository;
+import com.afs.restapi.repository.CompanyRepositoryInMongo;
+import com.afs.restapi.repository.EmployeeRepository;
+import com.afs.restapi.repository.EmployeeRepositoryInMongo;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+
+@ExtendWith(SpringExtension.class)
+public class CompanyServiceTest {
+    @Mock
+    CompanyRepository mockCompanyRepository;
+    @Mock
+    EmployeeRepository mockEmployeeRepository;
+    @Mock
+    CompanyRepositoryInMongo mockCompanyRepositoryInMongo;
+    @InjectMocks
+    CompanyService companyService;
+
+    @Test
+    void should_return_all_companies_when_find_all_given_companies() {
+        //given
+        List<Company> companies = new ArrayList<>();
+        companies.add(new Company("1", "OOCL"));
+
+        given(mockCompanyRepositoryInMongo.findAll())
+                .willReturn(companies);
+
+        //when
+        List<Company> actual = companyService.findAll();
+
+        //then
+        assertEquals(companies, actual);
+    }
+
 //    @Test
 //    void should_return_company_by_id_when_find_by_id_given_company_id() {
 //        //given
@@ -62,7 +63,7 @@
 //        //then
 //        assertEquals(company, actual);
 //    }
-//
+
 //    @Test
 //    void should_return_all_employees_in_company_when_find_all_employees_by_company_id_given_company_id_employees() {
 //        //given
@@ -135,20 +136,20 @@
 //        //then
 //        assertEquals(company, actual);
 //    }
+
+//    @Test
+//    void should_return_company_when_delete_company_given_company_id() {
+//        //given
+//        Company company1 = new Company("1", "OOCL");
+//        Company company2 = new Company("2", "DHL");
 //
-////    @Test
-////    void should_return_company_when_delete_company_given_company_id() {
-////        //given
-////        Company company1 = new Company("1", "OOCL");
-////        Company company2 = new Company("2", "DHL");
-////
-////        given(mockCompanyRepository.remove(company2.getId()))
-////                .willReturn(company2);
-////
-////        //when
-////        Company actual = companyService.remove(company2.getId());
-////
-////        //then
-////        assertEquals(company2, actual);
-////    }
-//}
+//        given(mockCompanyRepository.remove(company2.getId()))
+//                .willReturn(company2);
+//
+//        //when
+//        Company actual = companyService.remove(company2.getId());
+//
+//        //then
+//        assertEquals(company2, actual);
+//    }
+}
