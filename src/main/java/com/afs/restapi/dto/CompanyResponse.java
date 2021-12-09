@@ -1,18 +1,16 @@
-package com.afs.restapi.entity;
+package com.afs.restapi.dto;
+
+import com.afs.restapi.entity.Employee;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Company {
+public class CompanyResponse {
     private String id;
     private String companyName;
-    private List<Employee> employees = new ArrayList<>();
+    private List<EmployeeResponse> employeeResponses;
 
-    public Company(String id, String companyName) {
-        this.id = id;
-        this.companyName = companyName;
-    }
-    public Company() {
+    public CompanyResponse() {
     }
 
     public String getId() {
@@ -23,8 +21,8 @@ public class Company {
         return this.companyName;
     }
 
-    public List<Employee> getEmployees() {
-        return this.employees;
+    public List<EmployeeResponse> getEmployeeResponses() {
+        return this.employeeResponses;
     }
 
     public void setId(String id) {
@@ -35,8 +33,7 @@ public class Company {
         this.companyName = companyName;
     }
 
-    public void setEmployees(List<Employee> employees) {
-        this.employees = employees;
+    public void setEmployeeResponses(List<EmployeeResponse> employeeResponses) {
+        this.employeeResponses = employeeResponses;
     }
 }
-

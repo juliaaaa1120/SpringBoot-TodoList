@@ -75,7 +75,7 @@ public class EmployeeRepository {
         employees.clear();
     }
 
-    public List<Employee> getEmployeesByCompanyId(String companyId) {
+    public List<Employee> getEmployeesByCompanyId(String companyId) throws NullPointerException {
         return employees.stream()
                 .filter(employee -> employee.getCompanyId().equals(companyId))
                 .collect(Collectors.toList());

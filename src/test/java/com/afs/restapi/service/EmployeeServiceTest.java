@@ -2,6 +2,7 @@ package com.afs.restapi.service;
 
 import com.afs.restapi.entity.Employee;
 import com.afs.restapi.repository.EmployeeRepository;
+import com.afs.restapi.repository.EmployeeRepositoryInMongo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -19,6 +20,8 @@ import static org.mockito.BDDMockito.given;
 public class EmployeeServiceTest {
     @Mock
     EmployeeRepository mockEmployeeRepository;
+    @Mock
+    EmployeeRepositoryInMongo mockEmployeeRepositoryInMongo;
     @InjectMocks
     EmployeeService employeeService;
 
@@ -27,7 +30,7 @@ public class EmployeeServiceTest {
         //given
         List<Employee> employees = new ArrayList<>();
         employees.add(new Employee("1", "Julia", 22, "Female","1", 100000));
-        given(mockEmployeeRepository.findAll())
+        given(mockEmployeeRepositoryInMongo.findAll())
                 .willReturn(employees);
 
         //when

@@ -2,6 +2,7 @@ package com.afs.restapi.controller;
 
 import com.afs.restapi.entity.Employee;
 import com.afs.restapi.repository.EmployeeRepository;
+import com.afs.restapi.repository.EmployeeRepositoryInMongo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,8 @@ public class EmployeeControllerTest {
     MockMvc mockMvc;
     @Autowired
     EmployeeRepository employeeRepository;
+    @Autowired
+    EmployeeRepositoryInMongo employeeRepositoryInMongo;
 
     // GET "/employees"
     // prepare data
@@ -31,27 +34,27 @@ public class EmployeeControllerTest {
     @BeforeEach
     void cleanRepository() {
         employeeRepository.clearAll();
+        employeeRepositoryInMongo.clearAll();
     }
 
     @Test
     void should_get_all_employees_when_perform_get_given_employees() throws Exception {
         //given
         Employee employee = new Employee("1", "Julia", 18, "Female", "1", 100000);
-        employeeRepository.create(employee);
-        //when
+        employeeRepositoryInMongo.insert(employee);
+        // when
         mockMvc.perform(MockMvcRequestBuilders.get("/employees"))
 //        mockMvc.perform(MockMvcRequestBuilders.get("/employees/{id}", employee.getId()))
 //        mockMvc.perform(MockMvcRequestBuilders.get("/employees/" + employee.getId()))
 //        mockMvc.perform(MockMvcRequestBuilders.get("/employees?gender=" + "Male"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].id").value(1))
                 .andExpect(jsonPath("$[0].name").value("Julia"))
                 .andExpect(jsonPath("$[0].age").value(18))
                 .andExpect(jsonPath("$[0].gender").value("Female"))
-                .andExpect(jsonPath("$[0].companyId").value(1))
+                .andExpect(jsonPath("$[0].companyId").value("1"))
                 .andExpect(jsonPath("$[0].salary").value(100000));
-        //then
+        // then
     }
 
     @Test

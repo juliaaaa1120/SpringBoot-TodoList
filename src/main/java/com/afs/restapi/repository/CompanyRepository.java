@@ -67,10 +67,9 @@ public class CompanyRepository {
         return updatedCompany;
     }
 
-    public Company remove(String id) {
+    public void remove(String id) {
         Company company = findById(id);
         companies.remove(company);
-        return company;
     }
 
     public void clearAll() {

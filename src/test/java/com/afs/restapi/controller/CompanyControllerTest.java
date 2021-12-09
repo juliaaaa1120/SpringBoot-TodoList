@@ -61,12 +61,11 @@ public class CompanyControllerTest {
                 .andExpect(jsonPath("$[0].id").value(1))
                 .andExpect(jsonPath("$[0].companyName").value("OOCL"))
                 .andExpect(jsonPath("$[0].employees", hasSize(3)))
-                .andExpect(jsonPath("$[0].employees[*].id").value(containsInAnyOrder(1, 2, 3)))
+                .andExpect(jsonPath("$[0].employees[*].id").value(containsInAnyOrder("1", "2", "3")))
                 .andExpect(jsonPath("$[0].employees[*].name").value(containsInAnyOrder("Julia", "Jason", "Klaus")))
                 .andExpect(jsonPath("$[0].employees[*].age").value(containsInAnyOrder(18, 18, 18)))
-                .andExpect(jsonPath("$[0].employees[*].gender").value(containsInAnyOrder("Female", "Male", "Male")))
-                .andExpect(jsonPath("$[0].employees[*].companyId").value(containsInAnyOrder(1, 1, 1)))
-                .andExpect(jsonPath("$[0].employees[*].salary").value(containsInAnyOrder(100000, 100000, 100000)));
+                .andExpect(jsonPath("$[0].employees[*].companyId").value(containsInAnyOrder("1", "1", "1")))
+                .andExpect(jsonPath("$[0].employees[*].gender").value(containsInAnyOrder("Female", "Male", "Male")));
         //then
     }
 
