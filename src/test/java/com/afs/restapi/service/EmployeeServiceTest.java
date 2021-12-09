@@ -67,7 +67,7 @@ public class EmployeeServiceTest {
         femaleEmployees.add(employee1);
         femaleEmployees.add(employee3);
 
-        given(mockEmployeeRepository.findByGender("Female"))
+        given(mockEmployeeRepositoryInMongo.findByGender("Female"))
                 .willReturn(femaleEmployees);
 
         //when
