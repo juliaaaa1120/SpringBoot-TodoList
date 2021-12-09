@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
@@ -82,27 +84,31 @@ public class CompanyServiceTest {
         assertEquals(employees, actual);
     }
 
-//    @Test
-//    void should_return_companies_by_page_when_find_by_page_given_page_and_page_size() {
-//        //given
-//        List<Company> displayedCompanies = new ArrayList<>();
-//        Company company1 = new Company("1", "OOCL");
-//        Company company2 = new Company("2", "DHL");
-//        Company company3 = new Company("3", "SF Express");
-//        Company company4 = new Company("4", "Disney");
-//        displayedCompanies.add(company3);
-//        displayedCompanies.add(company4);
-//
-//        given(mockCompanyRepository.findByPage(2,2))
-//                .willReturn(displayedCompanies);
-//
-//        //when
-//        List<Company> actual = companyService.findByPage(2,2);
-//
-//        //then
-//        assertEquals(displayedCompanies, actual);
-//    }
-//
+    @Test
+    void should_return_companies_by_page_when_find_by_page_given_page_and_page_size() {
+        //given
+        List<Company> companies = new ArrayList<>();
+        Company company1 = new Company("1", "OOCL");
+        Company company2 = new Company("2", "DHL");
+        Company company3 = new Company("3", "SF Express");
+        Company company4 = new Company("4", "Disney");
+        companies.add(company1);
+        companies.add(company2);
+        companies.add(company3);
+        companies.add(company4);
+
+        PageImpl<Company> returnedPage = new PageImpl<>(companies, PageRequest.of(2, 2), 1);
+
+        given(mockCompanyRepositoryInMongo.findAll(any(PageRequest.class)))
+                .willReturn(returnedPage);
+
+        //when
+        List<Company> actual = companyService.findByPage(2,2);
+
+        //then
+        assertEquals(returnedPage.getContent(), actual);
+    }
+
 //    @Test
 //    void should_return_company_when_create_company_given_company() {
 //        //given

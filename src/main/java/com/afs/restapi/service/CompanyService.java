@@ -8,10 +8,12 @@ import com.afs.restapi.repository.CompanyRepository;
 import com.afs.restapi.repository.CompanyRepositoryInMongo;
 import com.afs.restapi.repository.EmployeeRepositoryInMongo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CompanyService {
@@ -55,9 +57,10 @@ public class CompanyService {
     }
 
     public List<Company> findByPage(Integer page, Integer pageSize) {
-        List<Company> companies = companyRepository.findByPage(page, pageSize);
 //        companies.forEach(company -> company.setEmployees(findAllEmployeesByCompanyId(company.getId())));
-        return companies;
+        return companyRepositoryInMongo.findAll(PageRequest.of(page, pageSize))
+                .stream()
+                .collect(Collectors.toList());
     }
 
     public Company create(Company company) {
