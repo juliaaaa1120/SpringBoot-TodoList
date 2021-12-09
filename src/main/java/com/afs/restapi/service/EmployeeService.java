@@ -51,7 +51,7 @@ public class EmployeeService {
     }
 
     public Employee create(Employee employee) {
-        return employeeRepository.create(employee);
+        return employeeRepositoryInMongo.insert(employee);
     }
 
     public void remove(String id) {

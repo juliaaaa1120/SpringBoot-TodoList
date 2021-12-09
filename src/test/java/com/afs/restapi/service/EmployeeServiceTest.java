@@ -110,7 +110,7 @@ public class EmployeeServiceTest {
         //given
         Employee employee = new Employee("1", "Julia", 22, "Female", "1", 100000);
 
-        given(mockEmployeeRepository.create(employee))
+        given(mockEmployeeRepositoryInMongo.insert(employee))
                 .willReturn(employee);
 
         //when
