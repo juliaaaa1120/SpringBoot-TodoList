@@ -109,20 +109,20 @@ public class CompanyServiceTest {
         assertEquals(returnedPage.getContent(), actual);
     }
 
-//    @Test
-//    void should_return_company_when_create_company_given_company() {
-//        //given
-//        Company company = new Company("1", "OOCL");
-//
-//        given(mockCompanyRepository.create(company))
-//                .willReturn(company);
-//
-//        //when
-//        Company actual = companyService.create(company);
-//
-//        //then
-//        assertEquals(company, actual);
-//    }
+    @Test
+    void should_return_company_when_create_company_given_company() {
+        //given
+        Company company = new Company("1", "OOCL");
+
+        given(mockCompanyRepositoryInMongo.insert(company))
+                .willReturn(company);
+
+        //when
+        Company actual = companyService.create(company);
+
+        //then
+        assertEquals(company, actual);
+    }
 //
 //    @Test
 //    void should_return_updated_company_when_edit_company_given_updated_company() {

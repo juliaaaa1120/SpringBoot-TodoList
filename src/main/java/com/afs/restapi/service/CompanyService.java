@@ -64,7 +64,7 @@ public class CompanyService {
     }
 
     public Company create(Company company) {
-        return companyRepository.create(company);
+        return companyRepositoryInMongo.insert(company);
     }
 
     public void remove(String id) {
