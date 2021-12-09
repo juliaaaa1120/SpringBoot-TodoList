@@ -49,6 +49,7 @@ public class CompanyServiceTest {
 
         //then
         assertEquals(companies, actual);
+        assertEquals(1, actual.size());
     }
 
     @Test
@@ -64,6 +65,7 @@ public class CompanyServiceTest {
 
         //then
         assertEquals(company, actual);
+        assertEquals(company.getCompanyName(), actual.getCompanyName());
     }
 
     @Test
@@ -82,6 +84,7 @@ public class CompanyServiceTest {
 
         //then
         assertEquals(employees, actual);
+        assertEquals(3, actual.size());
     }
 
     @Test
@@ -123,25 +126,26 @@ public class CompanyServiceTest {
         //then
         assertEquals(company, actual);
     }
-//
-//    @Test
-//    void should_return_updated_company_when_edit_company_given_updated_company() {
-//        //given
-//        Company company = new Company("1", "OOCL");
-//        Company updatedCompany = new Company("1", "Disney");
-//        given(mockCompanyRepository.findById(any()))
-//                .willReturn(company);
-//        company.setCompanyName(updatedCompany.getCompanyName());
-//        company.setEmployees(updatedCompany.getEmployees());
-//        given(mockCompanyRepository.save(any(), any(Company.class)))
-//                .willReturn(company);
-//
-//        //when
-//        Company actual = companyService.edit(company.getId(), updatedCompany);
-//
-//        //then
-//        assertEquals(company, actual);
-//    }
+
+    @Test
+    void should_return_updated_company_when_edit_company_given_updated_company() {
+        //given
+        Company company = new Company("1", "OOCL");
+        Company updatedCompany = new Company("1", "Disney");
+        given(mockCompanyRepositoryInMongo.findById(any()))
+                .willReturn(java.util.Optional.of(company));
+        company.setCompanyName(updatedCompany.getCompanyName());
+        company.setEmployees(updatedCompany.getEmployees());
+        given(mockCompanyRepositoryInMongo.save(any(Company.class)))
+                .willReturn(company);
+
+        //when
+        Company actual = companyService.edit(company.getId(), updatedCompany);
+
+        //then
+        assertEquals(company, actual);
+        assertEquals(company.getCompanyName(), actual.getCompanyName());
+    }
 
 //    @Test
 //    void should_return_company_when_delete_company_given_company_id() {

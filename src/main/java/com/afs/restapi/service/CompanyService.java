@@ -38,12 +38,13 @@ public class CompanyService {
     }
 
     public Company edit(String id, Company updatedCompany) {
-        Company company = companyRepository.findById(id);
+        Company company = companyRepositoryInMongo.findById(id)
+                .orElseThrow(NoCompanyFoundException::new);
         if (updatedCompany.getCompanyName() != null) {
             company.setCompanyName(updatedCompany.getCompanyName());
         }
 //        company.setEmployees(findAllEmployeesByCompanyId(company.getId()));
-        return companyRepository.save(id, company);
+        return companyRepositoryInMongo.save(company);
     }
 
     public Company findById(String id) {

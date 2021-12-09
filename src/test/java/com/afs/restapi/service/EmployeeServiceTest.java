@@ -43,6 +43,7 @@ public class EmployeeServiceTest {
 
         //then
         assertEquals(employees, actual);
+        assertEquals(1, actual.size());
     }
 
     @Test
@@ -60,6 +61,12 @@ public class EmployeeServiceTest {
 
         //then
         assertEquals(employee3, actual);
+        assertEquals(employee3.getId(), actual.getId());
+        assertEquals(employee3.getName(), actual.getName());
+        assertEquals(employee3.getAge(), actual.getAge());
+        assertEquals(employee3.getGender(), actual.getGender());
+        assertEquals(employee3.getCompanyId(), actual.getCompanyId());
+        assertEquals(employee3.getSalary(), actual.getSalary());
     }
 
     @Test
@@ -80,6 +87,7 @@ public class EmployeeServiceTest {
 
         //then
         assertEquals(femaleEmployees, actual);
+        assertEquals(2, actual.size());
     }
 
     @Test
@@ -157,7 +165,6 @@ public class EmployeeServiceTest {
     void should_return_employee_when_delete_employee_given_employee_id() {
         //given
         Employee employee1 = new Employee("1", "Julia", 22, "Female", "1", 100000);
-        Employee employee2 = new Employee("2", "Jason", 22, "Male", "1", 100000);
 
         willDoNothing().given(mockEmployeeRepositoryInMongo).deleteById(employee1.getId());
 
@@ -166,5 +173,6 @@ public class EmployeeServiceTest {
 
         //then
         verify(mockEmployeeRepositoryInMongo).deleteById(employee1.getId());
+        assertEquals(0, mockEmployeeRepositoryInMongo.findAll().size());
     }
 }
