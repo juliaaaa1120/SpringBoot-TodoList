@@ -15,7 +15,7 @@ public class CompanyService {
     private final CompanyRepository companyRepository;
 
     @Autowired
-    private EmployeeService employeeService;
+    private EmployeeRepository employeeRepository;
 
     public CompanyService(CompanyRepository companyRepository) {
         this.companyRepository = companyRepository;
@@ -28,7 +28,7 @@ public class CompanyService {
         return companies;
     }
 
-    public Company edit(Integer id, Company updatedCompany) {
+    public Company edit(String id, Company updatedCompany) {
         Company company = findById(id);
         if (updatedCompany.getCompanyName() != null) {
             company.setCompanyName(updatedCompany.getCompanyName());
@@ -36,13 +36,17 @@ public class CompanyService {
         return companyRepository.save(id, company);
     }
 
-    public Company findById(Integer id) {
-        updateEmployees(id);
-        return companyRepository.findById(id);
+    public Company findById(String id) {
+        Company company = companyRepository.findById(id);
+        List<Employee> employees = employeeRepository.getEmployeesByCompanyId(id);
+        company.setEmployees(employees);
+        return company;
     }
 
-    public List<Employee> findAllEmployeesByCompanyId(Integer id) {
-        updateEmployees(id);
+    public List<Employee> findAllEmployeesByCompanyId(String id) {
+        List<Employee> employees = employeeRepository.getEmployeesByCompanyId(id);
+        Company company = companyRepository.findById(id);
+        company.setEmployees(employees);
         return companyRepository.findAllEmployeesByCompanyId(id);
     }
 
@@ -57,12 +61,12 @@ public class CompanyService {
         return updatedCompany;
     }
 
-    public Company remove(Integer id) {
+    public Company remove(String id) {
         updateEmployees(id);
         return companyRepository.remove(id);
     }
 
-    public void updateEmployees(Integer companyId) {
+    public void updateEmployees(String companyId) {
         Company company = companyRepository.findById(companyId);
         List<Employee> employees = employeeService.getEmployeesByCompanyId(companyId);
         companyRepository.updateEmployees(companyId, employees);

@@ -13,11 +13,9 @@ import java.util.List;
 @RequestMapping("companies")
 public class CompanyController {
     private final CompanyService companyService;
-    private final EmployeeService employeeService;
 
     public CompanyController(CompanyService companyService, EmployeeService employeeService) {
         this.companyService = companyService;
-        this.employeeService = employeeService;
     }
 
     @GetMapping
@@ -26,13 +24,12 @@ public class CompanyController {
     }
 
     @GetMapping("/{id}")
-    public Company getCompanyById(@PathVariable Integer id) {
+    public Company getCompanyById(@PathVariable String id) {
         return companyService.findById(id);
     }
 
     @GetMapping("/{id}/employees")
-    public List<Employee> getAllEmployeesByCompanyId(@PathVariable Integer id) {
-
+    public List<Employee> getAllEmployeesByCompanyId(@PathVariable String id) {
         return companyService.findAllEmployeesByCompanyId(id);
     }
 
@@ -48,20 +45,13 @@ public class CompanyController {
     }
 
     @PutMapping("/{id}")
-    public Company editCompany(@PathVariable Integer id, @RequestBody Company updatedCompany) {
-        Company company = companyService.findById(id);
-        if (updatedCompany.getCompanyName() != null) {
-            company.setCompanyName(updatedCompany.getCompanyName());
-        }
-        if (updatedCompany.getEmployees() != null) {
-            company.setEmployees(updatedCompany.getEmployees());
-        }
-        return companyService.edit(id, company);
+    public Company editCompany(@PathVariable String id, @RequestBody Company updatedCompany) {
+        return companyService.edit(id, updatedCompany);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Company deleteCompany(@PathVariable Integer id) {
+    public Company deleteCompany(@PathVariable String id) {
         return companyService.remove(id);
     }
 }

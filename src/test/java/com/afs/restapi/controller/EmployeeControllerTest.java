@@ -1,4 +1,4 @@
-package com.afs.restapi;
+package com.afs.restapi.controller;
 
 import com.afs.restapi.entity.Employee;
 import com.afs.restapi.repository.EmployeeRepository;
@@ -36,7 +36,7 @@ public class EmployeeControllerTest {
     @Test
     void should_get_all_employees_when_perform_get_given_employees() throws Exception {
         //given
-        Employee employee = new Employee(1, "Julia", 18, "Female", 1, 100000);
+        Employee employee = new Employee("1", "Julia", 18, "Female", "1", 100000);
         employeeRepository.create(employee);
         //when
         mockMvc.perform(MockMvcRequestBuilders.get("/employees"))
@@ -57,9 +57,9 @@ public class EmployeeControllerTest {
     @Test
     void should_get_employee_by_id_when_perform_get_given_employee_id() throws Exception {
         //given
-        Employee employee1 = new Employee(1, "Julia", 18, "Female",1, 100000);
+        Employee employee1 = new Employee("1", "Julia", 18, "Female","1", 100000);
         employeeRepository.create(employee1);
-        Employee employee2 = new Employee(2, "Jason", 18, "Male", 2,100000);
+        Employee employee2 = new Employee("2", "Jason", 18, "Male", "2",100000);
         employeeRepository.create(employee2);
         //when
         mockMvc.perform(MockMvcRequestBuilders.get("/employees/{id}", employee2.getId()))
@@ -76,11 +76,11 @@ public class EmployeeControllerTest {
     @Test
     void should_get_employees_by_gender_when_perform_get_given_employee_gender() throws Exception {
         //given
-        Employee employee1 = new Employee(1, "Julia", 18, "Female", 1,100000);
+        Employee employee1 = new Employee("1", "Julia", 18, "Female", "1",100000);
         employeeRepository.create(employee1);
-        Employee employee2 = new Employee(2, "Jason", 18, "Male",2, 100000);
+        Employee employee2 = new Employee("2", "Jason", 18, "Male","2", 100000);
         employeeRepository.create(employee2);
-        Employee employee3 = new Employee(3, "Gloria", 18, "Female", 3,100000);
+        Employee employee3 = new Employee("3", "Gloria", 18, "Female", "3",100000);
         employeeRepository.create(employee3);
         //when
         mockMvc.perform(MockMvcRequestBuilders.get("/employees")
@@ -99,13 +99,13 @@ public class EmployeeControllerTest {
     @Test
     void should_get_employees_by_page_when_perform_get_given_page_and_page_size() throws Exception {
         //given
-        Employee employee1 = new Employee(1, "Julia", 18, "Female", 1,100000);
+        Employee employee1 = new Employee("1", "Julia", 18, "Female", "1",100000);
         employeeRepository.create(employee1);
-        Employee employee2 = new Employee(2, "Jason", 18, "Male", 2,100000);
+        Employee employee2 = new Employee("2", "Jason", 18, "Male", "2",100000);
         employeeRepository.create(employee2);
-        Employee employee3 = new Employee(3, "Gloria", 18, "Female", 3,100000);
+        Employee employee3 = new Employee("3", "Gloria", 18, "Female", "3",100000);
         employeeRepository.create(employee3);
-        Employee employee4 = new Employee(4, "Johnson", 18, "Male", 2,100000);
+        Employee employee4 = new Employee("4", "Johnson", 18, "Male", "2",100000);
         employeeRepository.create(employee4);
         //when
         mockMvc.perform(MockMvcRequestBuilders.get("/employees")
@@ -148,11 +148,11 @@ public class EmployeeControllerTest {
     @Test
     void should_return_updated_employee_when_perform_put_given_employee_id() throws Exception {
         //given
-        Employee employee1 = new Employee(1, "Julia", 18, "Female", 1,100000);
+        Employee employee1 = new Employee("1", "Julia", 18, "Female", "1",100000);
         employeeRepository.create(employee1);
-        Employee employee2 = new Employee(2, "Jason", 18, "Male",2, 100000);
+        Employee employee2 = new Employee("2", "Jason", 18, "Male","2", 100000);
         employeeRepository.create(employee2);
-        Employee employee3 = new Employee(3, "Gloria", 18, "Female", 3,100000);
+        Employee employee3 = new Employee("3", "Gloria", 18, "Female", "3",100000);
         employeeRepository.create(employee3);
         String updatedEmployee = "{\n" +
                 "        \"age\": 30,\n" +
@@ -174,11 +174,11 @@ public class EmployeeControllerTest {
     @Test
     void should_return_employee_when_perform_delete_given_employee_id() throws Exception {
         //given
-        Employee employee1 = new Employee(1, "Julia", 18, "Female", 1,100000);
+        Employee employee1 = new Employee("1", "Julia", 18, "Female", "1",100000);
         employeeRepository.create(employee1);
-        Employee employee2 = new Employee(2, "Jason", 18, "Male", 2,100000);
+        Employee employee2 = new Employee("2", "Jason", 18, "Male", "2",100000);
         employeeRepository.create(employee2);
-        Employee employee3 = new Employee(3, "Gloria", 18, "Female",3, 100000);
+        Employee employee3 = new Employee("3", "Gloria", 18, "Female","3", 100000);
         employeeRepository.create(employee3);
         //when
         mockMvc.perform(MockMvcRequestBuilders.delete("/employees/{id}", employee2.getId()))
