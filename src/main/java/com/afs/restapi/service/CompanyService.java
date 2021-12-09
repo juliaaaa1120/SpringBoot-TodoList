@@ -51,7 +51,7 @@ public class CompanyService {
     }
 
     public List<Employee> findAllEmployeesByCompanyId(String id) {
-        return employeeService.getEmployeesByCompanyId(id);
+        return companyRepositoryInMongo.findAllEmployeesByCompanyId(id);
     }
 
     public List<Company> findByPage(Integer page, Integer pageSize) {

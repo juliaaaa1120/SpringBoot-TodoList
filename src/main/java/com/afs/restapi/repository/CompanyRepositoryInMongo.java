@@ -14,5 +14,7 @@ public interface CompanyRepositoryInMongo extends MongoRepository<Company, Strin
 
     List<Company> findByGender(String gender);
 
+    List<Employee> findAllEmployeesByCompanyId(String id);
+
     void clearAll();
 }

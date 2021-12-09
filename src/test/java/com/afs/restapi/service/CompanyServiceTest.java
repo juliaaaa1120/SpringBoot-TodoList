@@ -64,24 +64,24 @@ public class CompanyServiceTest {
         assertEquals(company, actual);
     }
 
-//    @Test
-//    void should_return_all_employees_in_company_when_find_all_employees_by_company_id_given_company_id_employees() {
-//        //given
-//        List<Employee> employees = Arrays.asList(new Employee("1", "Julia", 18, "Female","1", 100000),
-//                new Employee("2", "Jason", 18, "Male","1", 100000),
-//                new Employee("3", "Klaus", 18, "Male","1", 100000));
-//        Company company = new Company("1", "OOCL");
-//
-//        given(mockCompanyRepository.findAllEmployeesByCompanyId(company.getId()))
-//                .willReturn(employees);
-//
-//        //when
-//        List<Employee> actual = companyService.findAllEmployeesByCompanyId(company.getId());
-//
-//        //then
-//        assertEquals(employees, actual);
-//    }
-//
+    @Test
+    void should_return_all_employees_in_company_when_find_all_employees_by_company_id_given_company_id_employees() {
+        //given
+        List<Employee> employees = Arrays.asList(new Employee("1", "Julia", 18, "Female","1", 100000),
+                new Employee("2", "Jason", 18, "Male","1", 100000),
+                new Employee("3", "Klaus", 18, "Male","1", 100000));
+        Company company = new Company("1", "OOCL");
+
+        given(mockCompanyRepositoryInMongo.findAllEmployeesByCompanyId(company.getId()))
+                .willReturn(employees);
+
+        //when
+        List<Employee> actual = companyService.findAllEmployeesByCompanyId(company.getId());
+
+        //then
+        assertEquals(employees, actual);
+    }
+
 //    @Test
 //    void should_return_companies_by_page_when_find_by_page_given_page_and_page_size() {
 //        //given
