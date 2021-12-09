@@ -56,7 +56,7 @@ public class EmployeeService {
     }
 
     public void remove(String id) {
-        employeeRepository.remove(id);
+        employeeRepositoryInMongo.deleteById(id);
     }
 
     public List<Employee> getEmployeesByCompanyId(String companyId) {

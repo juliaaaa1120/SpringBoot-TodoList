@@ -17,6 +17,8 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willDoNothing;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(SpringExtension.class)
@@ -139,19 +141,18 @@ public class EmployeeServiceTest {
         assertEquals(employee, actual);
     }
 
-//    @Test
-//    void should_return_employee_when_delete_employee_given_employee_id() {
-//        //given
-//        Employee employee1 = new Employee("1", "Julia", 22, "Female", "1", 100000);
-//        Employee employee2 = new Employee("2", "Jason", 22, "Male", "1", 100000);
-//
-//        given(mockEmployeeRepository.remove(employee1.getId()))
-//                .willReturn(employee1);
-//
-//        //when
-//        Employee actual = employeeService.remove(employee1.getId());
-//
-//        //then
-//        assertEquals(employee1, actual);
-//    }
+    @Test
+    void should_return_employee_when_delete_employee_given_employee_id() {
+        //given
+        Employee employee1 = new Employee("1", "Julia", 22, "Female", "1", 100000);
+        Employee employee2 = new Employee("2", "Jason", 22, "Male", "1", 100000);
+
+        willDoNothing().given(mockEmployeeRepositoryInMongo).deleteById(employee1.getId());
+
+        //when
+        employeeService.remove(employee1.getId());
+
+        //then
+        verify(mockEmployeeRepositoryInMongo).deleteById(employee1.getId());
+    }
 }
