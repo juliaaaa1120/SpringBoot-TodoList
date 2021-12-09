@@ -125,11 +125,11 @@ public class EmployeeServiceTest {
         //given
         Employee employee = new Employee("1", "Julia", 22, "Female", "1", 100000);
         Employee updatedEmployee = new Employee("1", "Julia", 25, "Female", "1", 500000);
-        given(mockEmployeeRepository.findById(any()))
-                .willReturn(employee);
+        given(mockEmployeeRepositoryInMongo.findById(any()))
+                .willReturn(java.util.Optional.of(employee));
         employee.setAge(updatedEmployee.getAge());
         employee.setSalary(updatedEmployee.getSalary());
-        given(mockEmployeeRepository.save(any(), any(Employee.class)))
+        given(mockEmployeeRepositoryInMongo.save(any(Employee.class)))
                 .willReturn(employee);
 
         //when

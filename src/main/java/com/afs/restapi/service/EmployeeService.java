@@ -25,14 +25,15 @@ public class EmployeeService {
     }
 
     public Employee edit(String id, Employee updatedEmployee) {
-        Employee employee = employeeRepository.findById(id);
+        Employee employee = employeeRepositoryInMongo.findById(id)
+                .orElseThrow(NoEmployeeFoundException::new);
         if (updatedEmployee.getAge() != null) {
             employee.setAge(updatedEmployee.getAge());
         }
         if (updatedEmployee.getSalary() != null) {
             employee.setSalary(updatedEmployee.getSalary());
         }
-        return employeeRepository.save(id, employee);
+        return employeeRepositoryInMongo.save(employee);
     }
 
     public Employee findById(String id) {
