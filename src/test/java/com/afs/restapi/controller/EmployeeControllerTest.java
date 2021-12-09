@@ -91,33 +91,30 @@ public class EmployeeControllerTest {
                 .andExpect(jsonPath("$[*].gender").value(containsInAnyOrder("Female", "Female")));
         //then
     }
-//
-//    @Test
-//    void should_get_employees_by_page_when_perform_get_given_page_and_page_size() throws Exception {
-//        //given
-//        Employee employee1 = new Employee("1", "Julia", 18, "Female", "1",100000);
-//        employeeRepository.create(employee1);
-//        Employee employee2 = new Employee("2", "Jason", 18, "Male", "2",100000);
-//        employeeRepository.create(employee2);
-//        Employee employee3 = new Employee("3", "Gloria", 18, "Female", "3",100000);
-//        employeeRepository.create(employee3);
-//        Employee employee4 = new Employee("4", "Johnson", 18, "Male", "2",100000);
-//        employeeRepository.create(employee4);
-//        //when
-//        mockMvc.perform(MockMvcRequestBuilders.get("/employees")
-//                .param("page", "2")
-//                .param("pageSize", "2"))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$", hasSize(2)))
-//                .andExpect(jsonPath("$[*].id").value(containsInAnyOrder(3, 4)))
-//                .andExpect(jsonPath("$[*].name").value(containsInAnyOrder("Gloria", "Johnson")))
-//                .andExpect(jsonPath("$[*].age").value(containsInAnyOrder(18, 18)))
-//                .andExpect(jsonPath("$[*].gender").value(containsInAnyOrder("Female", "Male")))
-//                .andExpect(jsonPath("$[*].companyId").value(containsInAnyOrder(2, 3)))
-//                .andExpect(jsonPath("$[*].salary").value(containsInAnyOrder(100000, 100000)));
-//        //then
-//    }
-//
+
+    @Test
+    void should_get_employees_by_page_when_perform_get_given_page_and_page_size() throws Exception {
+        //given
+        Employee employee1 = new Employee("1", "Julia", 18, "Female", "1",100000);
+        employeeRepositoryInMongo.insert(employee1);
+        Employee employee2 = new Employee("2", "Jason", 18, "Male", "2",100000);
+        employeeRepositoryInMongo.insert(employee2);
+        Employee employee3 = new Employee("3", "Gloria", 18, "Female", "3",100000);
+        employeeRepositoryInMongo.insert(employee3);
+        Employee employee4 = new Employee("4", "Johnson", 18, "Male", "2",100000);
+        employeeRepositoryInMongo.insert(employee4);
+        //when
+        mockMvc.perform(MockMvcRequestBuilders.get("/employees")
+                .param("page", "2")
+                .param("pageSize", "2"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[*].name").value(containsInAnyOrder("Gloria", "Johnson")))
+                .andExpect(jsonPath("$[*].age").value(containsInAnyOrder(18, 18)))
+                .andExpect(jsonPath("$[*].gender").value(containsInAnyOrder("Female", "Male")));
+        //then
+    }
+
 //    @Test
 //    void should_return_employee_when_perform_post_given_employee() throws Exception {
 //        //given

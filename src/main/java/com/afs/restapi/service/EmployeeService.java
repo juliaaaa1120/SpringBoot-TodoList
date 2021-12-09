@@ -46,7 +46,7 @@ public class EmployeeService {
     }
 
     public List<Employee> findByPage(Integer page, Integer pageSize) {
-        return employeeRepositoryInMongo.findAll(PageRequest.of(page, pageSize))
+        return employeeRepositoryInMongo.findAll(PageRequest.of(page - 1, pageSize))
                 .stream()
                 .collect(Collectors.toList());
     }
