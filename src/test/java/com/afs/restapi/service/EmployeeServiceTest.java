@@ -47,8 +47,8 @@ public class EmployeeServiceTest {
         Employee employee2 = new Employee("2", "Jason", 22, "Male", "1", 100000);
         Employee employee3 = new Employee("3", "Joanne", 22, "Female", "1",100000);
 
-        given(mockEmployeeRepository.findById(employee3.getId()))
-                .willReturn(employee3);
+        given(mockEmployeeRepositoryInMongo.findById(employee3.getId()))
+                .willReturn(java.util.Optional.of(employee3));
 
         //when
         Employee actual = employeeService.findById(employee3.getId());
