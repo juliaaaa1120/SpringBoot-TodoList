@@ -95,13 +95,13 @@ public class EmployeeControllerTest {
     @Test
     void should_get_employees_by_page_when_perform_get_given_page_and_page_size() throws Exception {
         //given
-        Employee employee1 = new Employee("1", "Julia", 18, "Female", "1",100000);
+        Employee employee1 = new Employee(null, "Julia", 18, "Female", "1",100000);
         employeeRepositoryInMongo.insert(employee1);
-        Employee employee2 = new Employee("2", "Jason", 18, "Male", "2",100000);
+        Employee employee2 = new Employee(null, "Jason", 18, "Male", "2",100000);
         employeeRepositoryInMongo.insert(employee2);
-        Employee employee3 = new Employee("3", "Gloria", 18, "Female", "3",100000);
+        Employee employee3 = new Employee(null, "Gloria", 18, "Female", "3",100000);
         employeeRepositoryInMongo.insert(employee3);
-        Employee employee4 = new Employee("4", "Johnson", 18, "Male", "2",100000);
+        Employee employee4 = new Employee(null, "Johnson", 18, "Male", "2",100000);
         employeeRepositoryInMongo.insert(employee4);
         //when
         mockMvc.perform(MockMvcRequestBuilders.get("/employees")
@@ -132,54 +132,49 @@ public class EmployeeControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name").value("Koby"))
                 .andExpect(jsonPath("$.age").value(18))
-                .andExpect(jsonPath("$.gender").value("Male"));
+                .andExpect(jsonPath("$.gender").value("Male"))
+                .andExpect(jsonPath("$.companyId").value("3"))
+                .andExpect(jsonPath("$.salary").value(100000));
     }
 
-//    @Test
-//    void should_return_updated_employee_when_perform_put_given_employee_id() throws Exception {
-//        //given
-//        Employee employee1 = new Employee("1", "Julia", 18, "Female", "1",100000);
-//        employeeRepository.create(employee1);
-//        Employee employee2 = new Employee("2", "Jason", 18, "Male","2", 100000);
-//        employeeRepository.create(employee2);
-//        Employee employee3 = new Employee("3", "Gloria", 18, "Female", "3",100000);
-//        employeeRepository.create(employee3);
-//        String updatedEmployee = "{\n" +
-//                "        \"age\": 30,\n" +
-//                "        \"salary\": 500000\n" +
-//                "}";
-//        //when
-//        mockMvc.perform(MockMvcRequestBuilders.put("/employees/{id}", employee2.getId())
-//                    .contentType(MediaType.APPLICATION_JSON)
-//                    .content(updatedEmployee))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.id").value(2))
-//                .andExpect(jsonPath("$.name").value("Jason"))
-//                .andExpect(jsonPath("$.age").value(30))
-//                .andExpect(jsonPath("$.gender").value("Male"))
-//                .andExpect(jsonPath("$.companyId").value(2))
-//                .andExpect(jsonPath("$.salary").value(500000));
-//    }
-//
-//    @Test
-//    void should_return_employee_when_perform_delete_given_employee_id() throws Exception {
-//        //given
-//        Employee employee1 = new Employee("1", "Julia", 18, "Female", "1",100000);
-//        employeeRepository.create(employee1);
-//        Employee employee2 = new Employee("2", "Jason", 18, "Male", "2",100000);
-//        employeeRepository.create(employee2);
-//        Employee employee3 = new Employee("3", "Gloria", 18, "Female","3", 100000);
-//        employeeRepository.create(employee3);
-//        //when
-//        mockMvc.perform(MockMvcRequestBuilders.delete("/employees/{id}", employee2.getId()))
-//                .andExpect(status().isNoContent())
-//                .andExpect(jsonPath("$.id").value(2))
-//                .andExpect(jsonPath("$.name").value("Jason"))
-//                .andExpect(jsonPath("$.age").value(18))
-//                .andExpect(jsonPath("$.gender").value("Male"))
-//                .andExpect(jsonPath("$.companyId").value(2))
-//                .andExpect(jsonPath("$.salary").value(100000));
-//        assertEquals(2, employeeRepository.findAll().size());
-//    }
+    @Test
+    void should_return_updated_employee_when_perform_put_given_employee_id() throws Exception {
+        //given
+        Employee employee1 = new Employee(null, "Julia", 18, "Female", "1",100000);
+        employeeRepositoryInMongo.insert(employee1);
+        Employee employee2 = new Employee(null, "Jason", 18, "Male","2", 100000);
+        employeeRepositoryInMongo.insert(employee2);
+        Employee employee3 = new Employee(null, "Gloria", 18, "Female", "3",100000);
+        employeeRepositoryInMongo.insert(employee3);
+        String updatedEmployee = "{\n" +
+                "        \"age\": 30,\n" +
+                "        \"salary\": 500000\n" +
+                "}";
+        //when
+        mockMvc.perform(MockMvcRequestBuilders.put("/employees/{id}", employee2.getId())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(updatedEmployee))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("Jason"))
+                .andExpect(jsonPath("$.age").value(30))
+                .andExpect(jsonPath("$.gender").value("Male"))
+                .andExpect(jsonPath("$.companyId").value("2"))
+                .andExpect(jsonPath("$.salary").value(500000));
+    }
+
+    @Test
+    void should_return_employee_when_perform_delete_given_employee_id() throws Exception {
+        //given
+        Employee employee1 = new Employee(null, "Julia", 18, "Female", "1",100000);
+        employeeRepositoryInMongo.insert(employee1);
+        Employee employee2 = new Employee(null, "Jason", 18, "Male", "2",100000);
+        employeeRepositoryInMongo.insert(employee2);
+        Employee employee3 = new Employee(null, "Gloria", 18, "Female","3", 100000);
+        employeeRepositoryInMongo.insert(employee3);
+        //when
+        mockMvc.perform(MockMvcRequestBuilders.delete("/employees/{id}", employee2.getId()))
+                .andExpect(status().isNoContent());
+        assertEquals(2, employeeRepositoryInMongo.findAll().size());
+    }
 }
 
