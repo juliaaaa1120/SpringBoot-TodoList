@@ -2,15 +2,16 @@ package com.afs.restapi.service;
 
 import com.afs.restapi.entity.Company;
 import com.afs.restapi.entity.Employee;
+import com.afs.restapi.exception.NoCompanyFoundException;
+import com.afs.restapi.exception.NoEmployeeFoundException;
 import com.afs.restapi.repository.CompanyRepository;
 import com.afs.restapi.repository.CompanyRepositoryInMongo;
-import com.afs.restapi.repository.EmployeeRepository;
 import com.afs.restapi.repository.EmployeeRepositoryInMongo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Service
 public class CompanyService {
@@ -44,9 +45,9 @@ public class CompanyService {
     }
 
     public Company findById(String id) {
-        Company company = companyRepository.findById(id);
 //        company.setEmployees(findAllEmployeesByCompanyId(company.getId()));
-        return company;
+        return companyRepositoryInMongo.findById(id)
+                .orElseThrow(NoCompanyFoundException::new);
     }
 
     public List<Employee> findAllEmployeesByCompanyId(String id) {

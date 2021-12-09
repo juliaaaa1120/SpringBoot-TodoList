@@ -49,20 +49,20 @@ public class CompanyServiceTest {
         assertEquals(companies, actual);
     }
 
-//    @Test
-//    void should_return_company_by_id_when_find_by_id_given_company_id() {
-//        //given
-//        Company company = new Company("1", "OOCL");
-//
-//        given(mockEmployeeRepositoryInMongo.findById(company.getId()))
-//                .willReturn(company);
-//
-//        //when
-//        Company actual = companyService.findById(company.getId());
-//
-//        //then
-//        assertEquals(company, actual);
-//    }
+    @Test
+    void should_return_company_by_id_when_find_by_id_given_company_id() {
+        //given
+        Company company = new Company("1", "OOCL");
+
+        given(mockCompanyRepositoryInMongo.findById(company.getId()))
+                .willReturn(java.util.Optional.of(company));
+
+        //when
+        Company actual = companyService.findById(company.getId());
+
+        //then
+        assertEquals(company, actual);
+    }
 
 //    @Test
 //    void should_return_all_employees_in_company_when_find_all_employees_by_company_id_given_company_id_employees() {
