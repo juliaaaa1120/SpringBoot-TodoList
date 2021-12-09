@@ -65,10 +65,9 @@ public class EmployeeRepository {
         return updatedEmployee;
     }
 
-    public Employee remove(String id) {
+    public void remove(String id) {
         Employee employee = findById(id);
         employees.remove(employee);
-        return employee;
     }
 
     public void clearAll() {
