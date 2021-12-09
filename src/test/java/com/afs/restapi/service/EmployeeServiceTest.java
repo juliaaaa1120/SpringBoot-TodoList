@@ -173,6 +173,6 @@ public class EmployeeServiceTest {
 
         //then
         verify(mockEmployeeRepositoryInMongo).deleteById(employee1.getId());
-        assertEquals(0, mockEmployeeRepositoryInMongo.findAll().size());
+        assertEquals(0, employeeService.findAll().size());
     }
 }

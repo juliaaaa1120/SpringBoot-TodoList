@@ -69,6 +69,6 @@ public class CompanyService {
     }
 
     public void remove(String id) {
-        companyRepository.remove(id);
+        companyRepositoryInMongo.deleteById(id);
     }
 }

@@ -23,6 +23,8 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willDoNothing;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(SpringExtension.class)
 public class CompanyServiceTest {
@@ -147,19 +149,18 @@ public class CompanyServiceTest {
         assertEquals(company.getCompanyName(), actual.getCompanyName());
     }
 
-//    @Test
-//    void should_return_company_when_delete_company_given_company_id() {
-//        //given
-//        Company company1 = new Company("1", "OOCL");
-//        Company company2 = new Company("2", "DHL");
-//
-//        given(mockCompanyRepository.remove(company2.getId()))
-//                .willReturn(company2);
-//
-//        //when
-//        Company actual = companyService.remove(company2.getId());
-//
-//        //then
-//        assertEquals(company2, actual);
-//    }
+    @Test
+    void should_return_company_when_delete_company_given_company_id() {
+        //given
+        Company company1 = new Company("1", "OOCL");
+
+        willDoNothing().given(mockCompanyRepositoryInMongo).deleteById(company1.getId());
+
+        //when
+        companyService.remove(company1.getId());
+
+        //then
+        verify(mockCompanyRepositoryInMongo).deleteById(company1.getId());
+        assertEquals(0, companyService.findAll().size());
+    }
 }
