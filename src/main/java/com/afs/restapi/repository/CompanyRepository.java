@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 @Repository
 public class CompanyRepository {
-    private List<Company> companies = new ArrayList<>();
+    private final List<Company> companies = new ArrayList<>();
 
     @Autowired
     private EmployeeRepository employeeRepository;

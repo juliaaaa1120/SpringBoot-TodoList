@@ -1,6 +1,7 @@
 package com.afs.restapi.service;
 
 import com.afs.restapi.entity.Employee;
+import com.afs.restapi.exception.NoCompanyFoundException;
 import com.afs.restapi.exception.NoEmployeeFoundException;
 import com.afs.restapi.repository.EmployeeRepository;
 import com.afs.restapi.repository.EmployeeRepositoryInMongo;
@@ -60,6 +61,6 @@ public class EmployeeService {
     }
 
     public List<Employee> getEmployeesByCompanyId(String companyId) {
-        return employeeRepository.getEmployeesByCompanyId(companyId);
+        return employeeRepositoryInMongo.getEmployeesByCompanyId(companyId);
     }
 }

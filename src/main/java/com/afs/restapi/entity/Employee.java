@@ -11,16 +11,16 @@ public class Employee {
     private String name;
     private Integer age;
     private String gender;
-    private String companyID;
+    private String companyId;
     private Integer salary;
 
 
-    public Employee(String id, String name, Integer age, String gender, String companyID, Integer salary) {
+    public Employee(String id, String name, Integer age, String gender, String companyId, Integer salary) {
         this.id = id;
         this.name = name;
         this.age = age;
         this.gender = gender;
-        this.companyID = companyID;
+        this.companyId = companyId;
         this.salary = salary;
     }
 
@@ -44,7 +44,7 @@ public class Employee {
     }
 
     public String getCompanyId() {
-        return this.companyID;
+        return this.companyId;
     }
 
     public Integer getSalary() {
@@ -68,7 +68,7 @@ public class Employee {
     }
 
     public void setCompanyId(String companyID) {
-        this.companyID = companyID;
+        this.companyId = companyId;
     }
 
     public void setSalary(Integer salary) {
