@@ -209,31 +209,22 @@ public class CompanyControllerTest {
                 .andExpect(jsonPath("$.employees[*].companyId").value(containsInAnyOrder(company.getId(), company.getId(), company.getId())))
                 .andExpect(jsonPath("$.employees[*].salary").value(containsInAnyOrder(100000, 100000, 100000)));
     }
-//
-//    @Test
-//    void should_return_company_when_perform_delete_given_company_id() throws Exception {
-//        //given
-//        Company company = new Company("1", "OOCL");
-//        companyRepository.create(company);
-//        Employee employee1 = new Employee("1", "Julia", 18, "Female","1", 100000);
-//        employeeRepository.create(employee1);
-//        Employee employee2 = new Employee("2", "Jason", 18, "Male","1", 100000);
-//        employeeRepository.create(employee2);
-//        Employee employee3 = new Employee("3", "Klaus", 18, "Male", "1",100000);
-//        employeeRepository.create(employee3);
-//        //when
-//        mockMvc.perform(MockMvcRequestBuilders.delete("/companies/{id}", company.getId()))
-//                .andExpect(status().isNoContent())
-//                .andExpect(jsonPath("$.id").value(1))
-//                .andExpect(jsonPath("$.companyName").value("OOCL"))
-//                .andExpect(jsonPath("$.employees", hasSize(3)))
-//                .andExpect(jsonPath("$.employees[*].id").value(containsInAnyOrder(1, 2, 3)))
-//                .andExpect(jsonPath("$.employees[*].name").value(containsInAnyOrder("Julia", "Jason", "Klaus")))
-//                .andExpect(jsonPath("$.employees[*].age").value(containsInAnyOrder(18, 18, 18)))
-//                .andExpect(jsonPath("$.employees[*].gender").value(containsInAnyOrder("Female", "Male", "Male")))
-//                .andExpect(jsonPath("$.employees[*].companyId").value(containsInAnyOrder(1, 1, 1)))
-//                .andExpect(jsonPath("$.employees[*].salary").value(containsInAnyOrder(100000, 100000, 100000)));
-//        assertEquals(0, companyRepository.findAll().size());
-//    }
+
+    @Test
+    void should_return_company_when_perform_delete_given_company_id() throws Exception {
+        //given
+        Company company = new Company(null, "OOCL");
+        companyRepositoryInMongo.insert(company);
+        Employee employee1 = new Employee(null, "Julia", 18, "Female", company.getId().toString(), 100000);
+        employeeRepositoryInMongo.insert(employee1);
+        Employee employee2 = new Employee(null, "Jason", 18, "Male", company.getId().toString(), 100000);
+        employeeRepositoryInMongo.insert(employee2);
+        Employee employee3 = new Employee(null, "Klaus", 18, "Male", company.getId().toString(),100000);
+        employeeRepositoryInMongo.insert(employee3);
+        //when
+        mockMvc.perform(MockMvcRequestBuilders.delete("/companies/{id}", company.getId()))
+                .andExpect(status().isNoContent());
+        assertEquals(0, companyRepositoryInMongo.findAll().size());
+    }
 }
 
