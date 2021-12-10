@@ -50,6 +50,7 @@ public class EmployeeControllerTest {
 //        mockMvc.perform(MockMvcRequestBuilders.get("/employees?gender=" + "Male"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].id").value(employee.getId()))
                 .andExpect(jsonPath("$[0].name").value("Julia"))
                 .andExpect(jsonPath("$[0].age").value(18))
                 .andExpect(jsonPath("$[0].gender").value("Female"));
@@ -66,6 +67,7 @@ public class EmployeeControllerTest {
         //when
         mockMvc.perform(MockMvcRequestBuilders.get("/employees/{id}", employee2.getId()))
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(employee2.getId()))
                 .andExpect(jsonPath("$.name").value("Jason"))
                 .andExpect(jsonPath("$.age").value(18))
                 .andExpect(jsonPath("$.gender").value("Male"));
@@ -86,6 +88,7 @@ public class EmployeeControllerTest {
                     .param("gender", "Female"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[*].id").value(containsInAnyOrder(employee1.getId(), employee3.getId())))
                 .andExpect(jsonPath("$[*].name").value(containsInAnyOrder("Julia", "Gloria")))
                 .andExpect(jsonPath("$[*].age").value(containsInAnyOrder(18, 18)))
                 .andExpect(jsonPath("$[*].gender").value(containsInAnyOrder("Female", "Female")));
@@ -109,6 +112,7 @@ public class EmployeeControllerTest {
                 .param("pageSize", "2"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[*].id").value(containsInAnyOrder(employee3.getId(), employee4.getId())))
                 .andExpect(jsonPath("$[*].name").value(containsInAnyOrder("Gloria", "Johnson")))
                 .andExpect(jsonPath("$[*].age").value(containsInAnyOrder(18, 18)))
                 .andExpect(jsonPath("$[*].gender").value(containsInAnyOrder("Female", "Male")));
@@ -155,6 +159,7 @@ public class EmployeeControllerTest {
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(updatedEmployee))
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(employee2.getId()))
                 .andExpect(jsonPath("$.name").value("Jason"))
                 .andExpect(jsonPath("$.age").value(30))
                 .andExpect(jsonPath("$.gender").value("Male"))
