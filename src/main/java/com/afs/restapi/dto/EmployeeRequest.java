@@ -4,7 +4,7 @@ public class EmployeeRequest {
     private String name;
     private Integer age;
     private String gender;
-    private String companyID;
+    private String companyId;
     private Integer salary;
 
     public EmployeeRequest() {
@@ -23,7 +23,7 @@ public class EmployeeRequest {
     }
 
     public String getCompanyId() {
-        return this.companyID;
+        return this.companyId;
     }
 
     public Integer getSalary() {
@@ -42,8 +42,8 @@ public class EmployeeRequest {
         this.gender = gender;
     }
 
-    public void setCompanyId(String companyID) {
-        this.companyID = companyID;
+    public void setCompanyId(String companyId) {
+        this.companyId = companyId;
     }
 
     public void setSalary(Integer salary) {

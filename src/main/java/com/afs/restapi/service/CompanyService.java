@@ -6,7 +6,6 @@ import com.afs.restapi.exception.NoCompanyFoundException;
 import com.afs.restapi.repository.CompanyRepository;
 import com.afs.restapi.repository.CompanyRepositoryInMongo;
 import com.afs.restapi.repository.EmployeeRepositoryInMongo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +23,6 @@ public class CompanyService {
         this.companyRepositoryInMongo = companyRepositoryInMongo;
         this.employeeRepositoryInMongo = employeeRepositoryInMongo;
     }
-
     public List<Company> findAll() {
         List<Company> companies = companyRepositoryInMongo.findAll();
         for (Company company : companies) {
@@ -38,17 +36,22 @@ public class CompanyService {
     public Company edit(String id, Company updatedCompany) {
         Company company = companyRepositoryInMongo.findById(id)
                 .orElseThrow(NoCompanyFoundException::new);
-        if (updatedCompany.getCompanyName() != null) {
-            company.setCompanyName(updatedCompany.getCompanyName());
+        if (updatedCompany.getName() != null) {
+            company.setName(updatedCompany.getName());
         }
-//        company.setEmployees(findAllEmployeesByCompanyId(company.getId()));
+        if (findAllEmployeesByCompanyId(company.getId()).size() != 0) {
+            company.setEmployees(findAllEmployeesByCompanyId(company.getId()));
+        }
         return companyRepositoryInMongo.save(company);
     }
 
     public Company findById(String id) {
-//        company.setEmployees(findAllEmployeesByCompanyId(company.getId()));
-        return companyRepositoryInMongo.findById(id)
+        Company company = companyRepositoryInMongo.findById(id)
                 .orElseThrow(NoCompanyFoundException::new);
+        if (findAllEmployeesByCompanyId(company.getId()).size() != 0) {
+            company.setEmployees(findAllEmployeesByCompanyId(company.getId()));
+        }
+        return company;
     }
 
     public List<Employee> findAllEmployeesByCompanyId(String id) {
@@ -56,10 +59,15 @@ public class CompanyService {
     }
 
     public List<Company> findByPage(Integer page, Integer pageSize) {
-//        companies.forEach(company -> company.setEmployees(findAllEmployeesByCompanyId(company.getId())));
-        return companyRepositoryInMongo.findAll(PageRequest.of(page, pageSize))
+        List<Company> companies = companyRepositoryInMongo.findAll(PageRequest.of(page - 1, pageSize))
                 .stream()
                 .collect(Collectors.toList());
+        for (Company company : companies) {
+            if (findAllEmployeesByCompanyId(company.getId()).size() != 0) {
+                company.setEmployees(findAllEmployeesByCompanyId(company.getId()));
+            }
+        }
+        return companies;
     }
 
     public Company create(Company company) {
@@ -69,4 +77,5 @@ public class CompanyService {
     public void remove(String id) {
         companyRepositoryInMongo.deleteById(id);
     }
+
 }

@@ -6,16 +6,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CompanyRequest {
-    private String companyName;
+    private String name;
 
     public CompanyRequest() {
     }
 
-    public String getCompanyName() {
-        return this.companyName;
+    public String getName() {
+        return this.name;
     }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+    public void setName(String name) {
+        this.name = name;
     }
 }

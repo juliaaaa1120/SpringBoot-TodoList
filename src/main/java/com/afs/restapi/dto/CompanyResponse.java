@@ -7,7 +7,7 @@ import java.util.List;
 
 public class CompanyResponse {
     private String id;
-    private String companyName;
+    private String name;
     private List<EmployeeResponse> employeeResponses;
 
     public CompanyResponse() {
@@ -17,8 +17,8 @@ public class CompanyResponse {
         return this.id;
     }
 
-    public String getCompanyName() {
-        return this.companyName;
+    public String getName() {
+        return this.name;
     }
 
     public List<EmployeeResponse> getEmployeeResponses() {
@@ -29,8 +29,8 @@ public class CompanyResponse {
         this.id = id;
     }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setEmployeeResponses(List<EmployeeResponse> employeeResponses) {

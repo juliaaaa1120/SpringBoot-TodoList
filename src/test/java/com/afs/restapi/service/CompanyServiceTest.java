@@ -18,8 +18,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -70,7 +68,7 @@ public class CompanyServiceTest {
 
         //then
         assertEquals(company, actual);
-        assertEquals(company.getCompanyName(), actual.getCompanyName());
+        assertEquals(company.getName(), actual.getName());
     }
 
     @Test
@@ -139,7 +137,7 @@ public class CompanyServiceTest {
         Company updatedCompany = new Company("1", "Disney");
         given(mockCompanyRepositoryInMongo.findById(any()))
                 .willReturn(java.util.Optional.of(company));
-        company.setCompanyName(updatedCompany.getCompanyName());
+        company.setName(updatedCompany.getName());
         company.setEmployees(updatedCompany.getEmployees());
         given(mockCompanyRepositoryInMongo.save(any(Company.class)))
                 .willReturn(company);
@@ -149,7 +147,7 @@ public class CompanyServiceTest {
 
         //then
         assertEquals(company, actual);
-        assertEquals(company.getCompanyName(), actual.getCompanyName());
+        assertEquals(company.getName(), actual.getName());
     }
 
     @Test

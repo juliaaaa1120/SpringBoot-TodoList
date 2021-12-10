@@ -11,12 +11,12 @@ import java.util.List;
 public class Company {
     @MongoId(FieldType.OBJECT_ID)
     private String id;
-    private String companyName;
+    private String name;
     private List<Employee> employees = new ArrayList<>();
 
-    public Company(String id, String companyName) {
+    public Company(String id, String name) {
         this.id = id;
-        this.companyName = companyName;
+        this.name = name;
     }
     public Company() {
     }
@@ -25,8 +25,8 @@ public class Company {
         return this.id;
     }
 
-    public String getCompanyName() {
-        return this.companyName;
+    public String getName() {
+        return this.name;
     }
 
     public List<Employee> getEmployees() {
@@ -37,8 +37,8 @@ public class Company {
         this.id = id;
     }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setEmployees(List<Employee> employees) {

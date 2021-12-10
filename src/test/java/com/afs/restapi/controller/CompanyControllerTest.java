@@ -53,11 +53,11 @@ public class CompanyControllerTest {
         //given
         Company company = new Company(null, "OOCL");
         companyRepositoryInMongo.insert(company);
-        Employee employee1 = new Employee(null, "Julia", 18, "Female","1", 100000);
+        Employee employee1 = new Employee(null, "Julia", 18, "Female", company.getId().toString(), 100000);
         employeeRepositoryInMongo.insert(employee1);
-        Employee employee2 = new Employee(null, "Jason", 18, "Male","1", 100000);
+        Employee employee2 = new Employee(null, "Jason", 18, "Male", company.getId().toString(), 100000);
         employeeRepositoryInMongo.insert(employee2);
-        Employee employee3 = new Employee(null, "Klaus", 18, "Male", "1",100000);
+        Employee employee3 = new Employee(null, "Klaus", 18, "Male", company.getId().toString(),100000);
         employeeRepositoryInMongo.insert(employee3);
         //when
         mockMvc.perform(MockMvcRequestBuilders.get("/companies"))
@@ -66,14 +66,15 @@ public class CompanyControllerTest {
 //        mockMvc.perform(MockMvcRequestBuilders.get("/employees?gender=" + "Male"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].id").value(1))
-                .andExpect(jsonPath("$[0].companyName").value("OOCL"))
+                .andExpect(jsonPath("$[0].id").value(company.getId()))
+                .andExpect(jsonPath("$[0].name").value("OOCL"))
                 .andExpect(jsonPath("$[0].employees", hasSize(3)))
-                .andExpect(jsonPath("$[0].employees[*].id").value(containsInAnyOrder("1", "2", "3")))
+                .andExpect(jsonPath("$[0].employees[*].id").value(containsInAnyOrder(employee1.getId(), employee2.getId(), employee3.getId())))
                 .andExpect(jsonPath("$[0].employees[*].name").value(containsInAnyOrder("Julia", "Jason", "Klaus")))
                 .andExpect(jsonPath("$[0].employees[*].age").value(containsInAnyOrder(18, 18, 18)))
-                .andExpect(jsonPath("$[0].employees[*].companyId").value(containsInAnyOrder("1", "1", "1")))
-                .andExpect(jsonPath("$[0].employees[*].gender").value(containsInAnyOrder("Female", "Male", "Male")));
+                .andExpect(jsonPath("$[0].employees[*].gender").value(containsInAnyOrder("Female", "Male", "Male")))
+                .andExpect(jsonPath("$[0].employees[*].companyId").value(containsInAnyOrder(company.getId(), company.getId(), company.getId())))
+                .andExpect(jsonPath("$[0].employees[*].salary").value(containsInAnyOrder(100000, 100000, 100000)));
         //then
     }
 
@@ -94,8 +95,10 @@ public class CompanyControllerTest {
         //when
         mockMvc.perform(MockMvcRequestBuilders.get("/companies/{id}", company2.getId()))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.companyName").value("SF Express"))
+                .andExpect(jsonPath("$.id").value(company2.getId()))
+                .andExpect(jsonPath("$.name").value("SF Express"))
                 .andExpect(jsonPath("$.employeeResponses", hasSize(1)))
+                .andExpect(jsonPath("$.employeeResponses[0].id").value(employee3.getId()))
                 .andExpect(jsonPath("$.employeeResponses[0].name").value("Klaus"))
                 .andExpect(jsonPath("$.employeeResponses[0].age").value(18))
                 .andExpect(jsonPath("$.employeeResponses[0].gender").value("Male"));
@@ -119,48 +122,49 @@ public class CompanyControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/companies/{id}/employees", company1.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[*].id").value(containsInAnyOrder(employee1.getId(), employee2.getId())))
                 .andExpect(jsonPath("$[*].name").value(containsInAnyOrder("Julia", "Jason")))
                 .andExpect(jsonPath("$[*].age").value(containsInAnyOrder(18, 18)))
                 .andExpect(jsonPath("$[*].gender").value(containsInAnyOrder("Female", "Male")));
         //then
     }
 
-//    @Test
-//    void should_get_companies_by_page_when_perform_get_given_page_and_page_size() throws Exception {
-//        //given
-//        Company company1 = new Company("1", "OOCL");
-//        companyRepository.create(company1);
-//        Company company2 = new Company("2", "DHL");
-//        companyRepository.create(company2);
-//        Company company3 = new Company("3", "SF Express");
-//        companyRepository.create(company3);
-//        Company company4 = new Company("4", "Disney");
-//        companyRepository.create(company4);
-//        Employee employee1 = new Employee("1", "Julia", 18, "Female","1", 100000);
-//        employeeRepository.create(employee1);
-//        Employee employee2 = new Employee("2", "Jason", 18, "Male","2", 100000);
-//        employeeRepository.create(employee2);
-//        Employee employee3 = new Employee("3", "Klaus", 18, "Male", "3",100000);
-//        employeeRepository.create(employee3);
-//        Employee employee4 = new Employee("4", "Gloria", 18, "Female", "4",100000);
-//        employeeRepository.create(employee4);
-//        //when
-//        mockMvc.perform(MockMvcRequestBuilders.get("/companies")
-//                .param("page", "2")
-//                .param("pageSize", "2"))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$", hasSize(2)))
-//                .andExpect(jsonPath("$[*].id").value(containsInAnyOrder(3, 4)))
-//                .andExpect(jsonPath("$[*].companyName").value(containsInAnyOrder("SF Express", "Disney")))
-//                .andExpect(jsonPath("$[*].employees[*].id").value(containsInAnyOrder(3, 4)))
-//                .andExpect(jsonPath("$[*].employees[*].name").value(containsInAnyOrder("Klaus", "Gloria")))
-//                .andExpect(jsonPath("$[*].employees[*].age").value(containsInAnyOrder(18, 18)))
-//                .andExpect(jsonPath("$[*].employees[*].gender").value(containsInAnyOrder("Male", "Female")))
-//                .andExpect(jsonPath("$[*].employees[*].companyId").value(containsInAnyOrder(3, 4)))
-//                .andExpect(jsonPath("$[*].employees[*].salary").value(containsInAnyOrder(100000, 100000)));
-//
-//        //then
-//    }
+    @Test
+    void should_get_companies_by_page_when_perform_get_given_page_and_page_size() throws Exception {
+        //given
+        Company company1 = new Company(null, "OOCL");
+        companyRepositoryInMongo.insert(company1);
+        Company company2 = new Company(null, "DHL");
+        companyRepositoryInMongo.insert(company2);
+        Company company3 = new Company(null, "SF Express");
+        companyRepositoryInMongo.insert(company3);
+        Company company4 = new Company(null, "Disney");
+        companyRepositoryInMongo.insert(company4);
+        Employee employee1 = new Employee(null, "Julia", 18, "Female",company1.getId().toString(), 100000);
+        employeeRepositoryInMongo.insert(employee1);
+        Employee employee2 = new Employee(null, "Jason", 18, "Male",company2.getId().toString(), 100000);
+        employeeRepositoryInMongo.insert(employee2);
+        Employee employee3 = new Employee(null, "Klaus", 18, "Male", company3.getId().toString(),100000);
+        employeeRepositoryInMongo.insert(employee3);
+        Employee employee4 = new Employee(null, "Gloria", 18, "Female", company4.getId().toString(),100000);
+        employeeRepositoryInMongo.insert(employee4);
+        //when
+        mockMvc.perform(MockMvcRequestBuilders.get("/companies")
+                .param("page", "2")
+                .param("pageSize", "2"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[*].id").value(containsInAnyOrder(company3.getId(), company4.getId())))
+                .andExpect(jsonPath("$[*].name").value(containsInAnyOrder("SF Express", "Disney")))
+                .andExpect(jsonPath("$[*].employees[*].id").value(containsInAnyOrder(employee3.getId(), employee4.getId())))
+                .andExpect(jsonPath("$[*].employees[*].name").value(containsInAnyOrder("Klaus", "Gloria")))
+                .andExpect(jsonPath("$[*].employees[*].age").value(containsInAnyOrder(18, 18)))
+                .andExpect(jsonPath("$[*].employees[*].gender").value(containsInAnyOrder("Male", "Female")))
+                .andExpect(jsonPath("$[*].employees[*].companyId").value(containsInAnyOrder(company3.getId(), company4.getId())))
+                .andExpect(jsonPath("$[*].employees[*].salary").value(containsInAnyOrder(100000, 100000)));
+
+        //then
+    }
 //
 //    @Test
 //    void should_return_company_when_perform_post_given_company() throws Exception {
