@@ -165,21 +165,20 @@ public class CompanyControllerTest {
 
         //then
     }
-//
-//    @Test
-//    void should_return_company_when_perform_post_given_company() throws Exception {
-//        //given
-//        String employee = "{\n" +
-//                "        \"companyName\": \"OOCL\"\n" +
-//                "    }";
-//        //when
-//        mockMvc.perform(MockMvcRequestBuilders.post("/companies")
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(employee))
-//                .andExpect(status().isCreated())
-//                .andExpect(jsonPath("$.id").isNumber())
-//                .andExpect(jsonPath("$.companyName").value("OOCL"));
-//    }
+
+    @Test
+    void should_return_company_when_perform_post_given_company() throws Exception {
+        //given
+        String company = "{\n" +
+                "        \"name\": \"OOCL\"\n" +
+                "    }";
+        //when
+        mockMvc.perform(MockMvcRequestBuilders.post("/companies")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(company))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.name").value("OOCL"));
+    }
 //
 //    @Test
 //    void should_return_updated_employee_when_perform_put_given_employee_id() throws Exception {
