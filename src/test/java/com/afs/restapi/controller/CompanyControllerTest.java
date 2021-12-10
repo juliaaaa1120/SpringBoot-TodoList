@@ -179,36 +179,36 @@ public class CompanyControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name").value("OOCL"));
     }
-//
-//    @Test
-//    void should_return_updated_employee_when_perform_put_given_employee_id() throws Exception {
-//        //given
-//        Company company = new Company("1", "OOCL");
-//        companyRepository.create(company);
-//        Employee employee1 = new Employee("1", "Julia", 18, "Female","1", 100000);
-//        employeeRepository.create(employee1);
-//        Employee employee2 = new Employee("2", "Jason", 18, "Male","1", 100000);
-//        employeeRepository.create(employee2);
-//        Employee employee3 = new Employee("3", "Klaus", 18, "Male", "1",100000);
-//        employeeRepository.create(employee3);
-//        String updatedCompany = "{\n" +
-//                "    \"companyName\": \"Disney\"\n" +
-//                "}";
-//        //when
-//        mockMvc.perform(MockMvcRequestBuilders.put("/companies/{id}", company.getId())
-//                    .contentType(MediaType.APPLICATION_JSON)
-//                    .content(updatedCompany))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.id").value(1))
-//                .andExpect(jsonPath("$.companyName").value("Disney"))
-//                .andExpect(jsonPath("$.employees", hasSize(3)))
-//                .andExpect(jsonPath("$.employees[*].id").value(containsInAnyOrder(1, 2, 3)))
-//                .andExpect(jsonPath("$.employees[*].name").value(containsInAnyOrder("Julia", "Jason", "Klaus")))
-//                .andExpect(jsonPath("$.employees[*].age").value(containsInAnyOrder(18, 18, 18)))
-//                .andExpect(jsonPath("$.employees[*].gender").value(containsInAnyOrder("Female", "Male", "Male")))
-//                .andExpect(jsonPath("$.employees[*].companyId").value(containsInAnyOrder(1, 1, 1)))
-//                .andExpect(jsonPath("$.employees[*].salary").value(containsInAnyOrder(100000, 100000, 100000)));
-//    }
+
+    @Test
+    void should_return_updated_employee_when_perform_put_given_employee_id() throws Exception {
+        //given
+        Company company = new Company(null, "OOCL");
+        companyRepositoryInMongo.insert(company);
+        Employee employee1 = new Employee(null, "Julia", 18, "Female", company.getId().toString(), 100000);
+        employeeRepositoryInMongo.insert(employee1);
+        Employee employee2 = new Employee(null, "Jason", 18, "Male", company.getId().toString(), 100000);
+        employeeRepositoryInMongo.insert(employee2);
+        Employee employee3 = new Employee(null, "Klaus", 18, "Male", company.getId().toString(),100000);
+        employeeRepositoryInMongo.insert(employee3);
+        String updatedCompany = "{\n" +
+                "    \"name\": \"Disney\"\n" +
+                "}";
+        //when
+        mockMvc.perform(MockMvcRequestBuilders.put("/companies/{id}", company.getId())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(updatedCompany))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(company.getId()))
+                .andExpect(jsonPath("$.name").value("Disney"))
+                .andExpect(jsonPath("$.employees", hasSize(3)))
+                .andExpect(jsonPath("$.employees[*].id").value(containsInAnyOrder(employee1.getId(), employee2.getId(), employee3.getId())))
+                .andExpect(jsonPath("$.employees[*].name").value(containsInAnyOrder("Julia", "Jason", "Klaus")))
+                .andExpect(jsonPath("$.employees[*].age").value(containsInAnyOrder(18, 18, 18)))
+                .andExpect(jsonPath("$.employees[*].gender").value(containsInAnyOrder("Female", "Male", "Male")))
+                .andExpect(jsonPath("$.employees[*].companyId").value(containsInAnyOrder(company.getId(), company.getId(), company.getId())))
+                .andExpect(jsonPath("$.employees[*].salary").value(containsInAnyOrder(100000, 100000, 100000)));
+    }
 //
 //    @Test
 //    void should_return_company_when_perform_delete_given_company_id() throws Exception {
