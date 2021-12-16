@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("todos")
+@CrossOrigin(origins = "http://localhost:3000")
 public class TodoController {
     private final TodoService todoService;
     private final TodoMapper todoMapper;
@@ -28,25 +29,6 @@ public class TodoController {
                 .map(employee -> todoMapper.toResponse(employee))
                 .collect(Collectors.toList());
     }
-
-//    @GetMapping("/{id}")
-//    public TodoResponse getEmployeeById(@PathVariable String id) {
-//        return todoMapper.toResponse(todoService.findById(id));
-//    }
-//
-//    @GetMapping(params = {"gender"})
-//    public List<TodoResponse> getEmployeesByGender(@RequestParam String gender) {
-//        return todoService.findByGender(gender).stream()
-//                .map(employee -> todoMapper.toResponse(employee))
-//                .collect(Collectors.toList());
-//    }
-//
-//    @GetMapping(params = {"page", "pageSize"})
-//    public List<TodoResponse> getEmployeesByPage(@RequestParam Integer page, @RequestParam Integer pageSize) {
-//        return todoService.findByPage(page, pageSize).stream()
-//                .map(todoMapper::toResponse)
-//                .collect(Collectors.toList());
-//    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

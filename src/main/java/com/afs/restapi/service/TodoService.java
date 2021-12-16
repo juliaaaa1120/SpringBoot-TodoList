@@ -33,21 +33,6 @@ public class TodoService {
         return todoRepositoryInMongo.save(todo);
     }
 
-//    public Todo findById(String id) {
-//        return todoRepositoryInMongo.findById(id)
-//                .orElseThrow(NoTodoFoundException::new);
-//    }
-//
-//    public List<Todo> findByGender(String gender) {
-//        return todoRepositoryInMongo.findByGender(gender);
-//    }
-//
-//    public List<Todo> findByPage(Integer page, Integer pageSize) {
-//        return todoRepositoryInMongo.findAll(PageRequest.of(page - 1, pageSize))
-//                .stream()
-//                .collect(Collectors.toList());
-//    }
-
     public Todo create(Todo todo) {
         return todoRepositoryInMongo.insert(todo);
     }
@@ -55,8 +40,4 @@ public class TodoService {
     public void delete(String id) {
         todoRepositoryInMongo.deleteById(id);
     }
-
-//    public List<Todo> getEmployeesByCompanyId(String companyId) {
-//        return todoRepositoryInMongo.getEmployeesByCompanyId(companyId);
-//    }
 }
