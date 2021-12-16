@@ -26,7 +26,7 @@ public class TodoController {
     @GetMapping
     public List<TodoResponse> getAllTodos() {
         return todoService.findAll().stream()
-                .map(employee -> todoMapper.toResponse(employee))
+                .map(todoMapper::toResponse)
                 .collect(Collectors.toList());
     }
 
