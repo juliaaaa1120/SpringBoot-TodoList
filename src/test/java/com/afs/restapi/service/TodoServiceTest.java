@@ -84,19 +84,19 @@ public class TodoServiceTest {
         assertEquals(todo.getText(), actual.getText());
         assertEquals(todo.getDone(), actual.getDone());
     }
-//
-//    @Test
-//    void should_return_employee_when_delete_employee_given_employee_id() {
-//        //given
-//        Todo todo1 = new Todo("1", "Julia", 22, "Female", "1", 100000);
-//
-//        willDoNothing().given(mockTodoRepositoryInMongo).deleteById(todo1.getId());
-//
-//        //when
-//        todoService.delete(todo1.getId());
-//
-//        //then
-//        verify(mockTodoRepositoryInMongo).deleteById(todo1.getId());
-//        assertEquals(0, todoService.findAll().size());
-//    }
+
+    @Test
+    void should_return_todo_when_delete_todo_given_todo_id() {
+        //given
+        Todo todo = new Todo("1", "Do homework before 22:00", false);
+
+        willDoNothing().given(mockTodoRepositoryInMongo).deleteById(todo.getId());
+
+        //when
+        todoService.delete(todo.getId());
+
+        //then
+        verify(mockTodoRepositoryInMongo).deleteById(todo.getId());
+        assertEquals(0, todoService.findAll().size());
+    }
 }
