@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -81,20 +82,20 @@ public class TodoControllerTest {
                 .andExpect(jsonPath("$.text").value("Do homework before 00:00"))
                 .andExpect(jsonPath("$.done").value(true));
     }
-//
-//    @Test
-//    void should_return_employee_when_perform_delete_given_employee_id() throws Exception {
-//        //given
-//        Todo todo1 = new Todo(null, "Julia", 18, "Female", "1",100000);
-//        todoRepositoryInMongo.insert(todo1);
-//        Todo todo2 = new Todo(null, "Jason", 18, "Male", "2",100000);
-//        todoRepositoryInMongo.insert(todo2);
-//        Todo todo3 = new Todo(null, "Gloria", 18, "Female","3", 100000);
-//        todoRepositoryInMongo.insert(todo3);
-//        //when
-//        mockMvc.perform(MockMvcRequestBuilders.delete("/employees/{id}", todo2.getId()))
-//                .andExpect(status().isNoContent());
-//        assertEquals(2, todoRepositoryInMongo.findAll().size());
-//    }
+
+    @Test
+    void should_return_null_when_perform_delete_given_todo_id() throws Exception {
+        //given
+        Todo todo1 = new Todo(null, "Have fun Christmas party", false);
+        todoRepositoryInMongo.insert(todo1);
+        Todo todo2 = new Todo(null, "Buy Christmas gifts", false);
+        todoRepositoryInMongo.insert(todo2);
+        Todo todo3 = new Todo(null, "Do homework before 22:00", false);
+        todoRepositoryInMongo.insert(todo3);
+        //when
+        mockMvc.perform(MockMvcRequestBuilders.delete("/todos/{id}", todo3.getId()))
+                .andExpect(status().isNoContent());
+        assertEquals(2, todoRepositoryInMongo.findAll().size());
+    }
 }
 

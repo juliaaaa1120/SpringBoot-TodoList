@@ -86,7 +86,7 @@ public class TodoServiceTest {
     }
 
     @Test
-    void should_return_todo_when_delete_todo_given_todo_id() {
+    void should_return_null_when_delete_todo_given_todo_id() {
         //given
         Todo todo = new Todo("1", "Do homework before 22:00", false);
 
