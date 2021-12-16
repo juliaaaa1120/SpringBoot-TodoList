@@ -63,30 +63,27 @@ public class TodoServiceTest {
         assertEquals(todo.getDone(), actual.getDone());
     }
 
-//    @Test
-//    void should_return_updated_employee_when_edit_employee_given_updated_employee() {
-//        //given
-//        Todo todo = new Todo("1", "Julia", 22, "Female", "1", 100000);
-//        Todo updatedTodo = new Todo("1", "Julia", 25, "Female", "1", 500000);
-//        given(mockTodoRepositoryInMongo.findById(any()))
-//                .willReturn(java.util.Optional.of(todo));
-//        todo.setAge(updatedTodo.getAge());
-//        todo.setSalary(updatedTodo.getSalary());
-//        given(mockTodoRepositoryInMongo.save(any(Todo.class)))
-//                .willReturn(todo);
-//
-//        //when
-//        Todo actual = todoService.update(todo.getId(), updatedTodo);
-//
-//        //then
-//        assertEquals(todo, actual);
-//        assertEquals(todo.getId(), actual.getId());
-//        assertEquals(todo.getName(), actual.getName());
-//        assertEquals(todo.getAge(), actual.getAge());
-//        assertEquals(todo.getGender(), actual.getGender());
-//        assertEquals(todo.getCompanyId(), actual.getCompanyId());
-//        assertEquals(todo.getSalary(), actual.getSalary());
-//    }
+    @Test
+    void should_return_updated_todo_when_update_todo_given_updated_todo() {
+        //given
+        Todo todo = new Todo("1", "Take 5 lunch boxes", false);
+        Todo updatedTodo = new Todo("1", "Take 2 lunch boxes", true);
+        given(mockTodoRepositoryInMongo.findById(any()))
+                .willReturn(java.util.Optional.of(todo));
+        todo.setText(updatedTodo.getText());
+        todo.setDone(updatedTodo.getDone());
+        given(mockTodoRepositoryInMongo.save(any(Todo.class)))
+                .willReturn(todo);
+
+        //when
+        Todo actual = todoService.update(todo.getId(), updatedTodo);
+
+        //then
+        assertEquals(todo, actual);
+        assertEquals(todo.getId(), actual.getId());
+        assertEquals(todo.getText(), actual.getText());
+        assertEquals(todo.getDone(), actual.getDone());
+    }
 //
 //    @Test
 //    void should_return_employee_when_delete_employee_given_employee_id() {
