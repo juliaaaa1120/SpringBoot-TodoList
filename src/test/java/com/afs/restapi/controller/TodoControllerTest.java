@@ -30,7 +30,7 @@ public class TodoControllerTest {
     }
 
     @Test
-    void should_get_all_employees_when_perform_get_given_employees() throws Exception {
+    void should_get_all_todos_when_perform_get_given_todos() throws Exception {
         //given
         Todo todo = new Todo(null, "Have fun Christmas party", false);
         todoRepositoryInMongo.insert(todo);
@@ -45,7 +45,7 @@ public class TodoControllerTest {
     }
 
     @Test
-    void should_return_employee_when_perform_post_given_employee() throws Exception {
+    void should_return_todo_when_perform_post_given_todo() throws Exception {
         //given
         String todo = "{\n" +
                 "    \"text\": \"Have fun Christmas party\"\n" +
@@ -58,32 +58,29 @@ public class TodoControllerTest {
                 .andExpect(jsonPath("$.text").value("Have fun Christmas party"))
                 .andExpect(jsonPath("$.done").value("false"));
     }
-//
-//    @Test
-//    void should_return_updated_employee_when_perform_put_given_employee_id() throws Exception {
-//        //given
-//        Todo todo1 = new Todo(null, "Julia", 18, "Female", "1",100000);
-//        todoRepositoryInMongo.insert(todo1);
-//        Todo todo2 = new Todo(null, "Jason", 18, "Male","2", 100000);
-//        todoRepositoryInMongo.insert(todo2);
-//        Todo todo3 = new Todo(null, "Gloria", 18, "Female", "3",100000);
-//        todoRepositoryInMongo.insert(todo3);
-//        String updatedEmployee = "{\n" +
-//                "        \"age\": 30,\n" +
-//                "        \"salary\": 500000\n" +
-//                "}";
-//        //when
-//        mockMvc.perform(MockMvcRequestBuilders.put("/employees/{id}", todo2.getId())
-//                    .contentType(MediaType.APPLICATION_JSON)
-//                    .content(updatedEmployee))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.id").value(todo2.getId()))
-//                .andExpect(jsonPath("$.name").value("Jason"))
-//                .andExpect(jsonPath("$.age").value(30))
-//                .andExpect(jsonPath("$.gender").value("Male"))
-//                .andExpect(jsonPath("$.companyId").value("2"))
-//                .andExpect(jsonPath("$.salary").value(500000));
-//    }
+
+    @Test
+    void should_return_updated_todo_when_perform_put_given_todo_id() throws Exception {
+        //given
+        Todo todo1 = new Todo(null, "Have fun Christmas party", false);
+        todoRepositoryInMongo.insert(todo1);
+        Todo todo2 = new Todo(null, "Buy Christmas gifts", false);
+        todoRepositoryInMongo.insert(todo2);
+        Todo todo3 = new Todo(null, "Do homework before 22:00", false);
+        todoRepositoryInMongo.insert(todo3);
+        String updatedEmployee = "{\n" +
+                "    \"text\": \"Do homework before 00:00\",\n" +
+                "    \"done\": true\n" +
+                "}";
+        //when
+        mockMvc.perform(MockMvcRequestBuilders.put("/todos/{id}", todo3.getId())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(updatedEmployee))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(todo3.getId()))
+                .andExpect(jsonPath("$.text").value("Do homework before 00:00"))
+                .andExpect(jsonPath("$.done").value(true));
+    }
 //
 //    @Test
 //    void should_return_employee_when_perform_delete_given_employee_id() throws Exception {
