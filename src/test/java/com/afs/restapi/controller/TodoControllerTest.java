@@ -49,7 +49,8 @@ public class TodoControllerTest {
     void should_return_todo_when_perform_post_given_todo() throws Exception {
         //given
         String todo = "{\n" +
-                "    \"text\": \"Have fun Christmas party\"\n" +
+                "    \"text\": \"Have fun Christmas party\",\n" +
+                "    \"done\": false\n" +
                 "}";
         //when
         mockMvc.perform(MockMvcRequestBuilders.post("/todos")
@@ -57,7 +58,7 @@ public class TodoControllerTest {
                 .content(todo))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.text").value("Have fun Christmas party"))
-                .andExpect(jsonPath("$.done").value("false"));
+                .andExpect(jsonPath("$.done").value(false));
     }
 
     @Test

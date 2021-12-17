@@ -24,17 +24,16 @@ public class TodoService {
     public Todo update(String id, Todo updatedTodo) {
         Todo todo = todoRepositoryInMongo.findById(id)
                 .orElseThrow(NoTodoFoundException::new);
-        if (updatedTodo.getText() != null) {
+        if (updatedTodo.getText() != null && !todo.getText().equals(updatedTodo.getText())) {
             todo.setText(updatedTodo.getText());
         }
-        if (updatedTodo.getDone() != null) {
+        if (updatedTodo.getDone() != null && !todo.getDone().equals(updatedTodo.getDone())) {
             todo.setDone(updatedTodo.getDone());
         }
         return todoRepositoryInMongo.save(todo);
     }
 
     public Todo create(Todo todo) {
-        todo.setDone(false);
         return todoRepositoryInMongo.insert(todo);
     }
 
